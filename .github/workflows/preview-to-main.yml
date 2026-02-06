@@ -1,0 +1,37 @@
+name: Preview to Main PR
+
+on:
+  push:
+    branches:
+      - preview
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: preview
+          title: "Auto PR: preview → main"
+          body: "PR criado automaticamente."
+          draft: false
+
+      - name: Install GitHub CLI
+        if: steps.cpr.outputs.pull-request-number != ''
+        run: sudo apt-get install gh -y
+
+      - name: Enable Auto Merge
+        if: steps.cpr.outputs.pull-request-number != ''
+        run: gh pr merge ${{ steps.cpr.outputs.pull-request-number }} --auto --merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

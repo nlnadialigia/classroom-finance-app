@@ -1,0 +1,18 @@
+export const dynamic = "force-dynamic";
+
+import { getSession } from "@/lib/session";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  if (session.user.role === "ADMIN") {
+    redirect("/admin");
+  } else {
+    redirect("/dashboard");
+  }
+}

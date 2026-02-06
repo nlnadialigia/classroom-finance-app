@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+model User {
+  id              String    @id @default(cuid())
+  username        String    @unique
+  password        String?
+  role            UserRole  @default(EDITOR)
+  publicSlug      String?
+  editorToken     String?   @unique
+  viewerToken     String?   @unique
+  sessions        Session[]
+  students        Student[]
+  expenses        Expense[]
+  config          Config?
+  incomes         Income[]
+
+  @@map("users")
+}
+
+model Config {
+  id              String @id @default(cuid())
+  year            Int
+  monthlyValue    Float  @map("monthly_value")
+  previousBalance Float  @default(0.00) @map("previous_balance")
+  userId          String @unique
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("config")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  role      String   @default("EDITOR")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, role])
+  @@map("sessions")
+}
+
+model Student {
+  id               String           @id @default(cuid())
+  name             String
+  isMonthlyReceipt Boolean          @default(true)
+  monthlyPeriods   Int[]            @default([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) @map("monthly_periods")
+  userId           String
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  monthlyReceipts  MonthlyReceipt[]
+  extraReceipts    ExtraReceipt[]
+
+  @@map("students")
+}
+
+model MonthlyReceipt {
+  id          String    @id @default(cuid())
+  studentId   String
+  month       Int
+  year        Int
+  value       Float
+  paymentDate DateTime?
+  paid        Boolean   @default(false)
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, month, year])
+  @@map("monthly_receipts")
+}
+
+model ExtraReceipt {
+  id          String   @id @default(cuid())
+  studentId   String
+  description String
+  value       Float
+  receiptDate DateTime
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@map("extra_receipts")
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  description String
+  value       Float
+  paymentDate DateTime
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("expenses")
+}
+
+model Income {
+  id     String     @id @default(cuid())
+  type   IncomeEnum @default(INCOME)
+  value  Float
+  month  Int
+  userId String
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("income")
+}
+
+enum IncomeEnum {
+  INCOME
+  PREVIOUS
+
+  @@map("income_enum")
+}

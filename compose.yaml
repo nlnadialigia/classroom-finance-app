@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  cf:
+    image: postgres:16
+    container_name: cf
+    ports:
+      - "8000:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: classroom-finance-db
+    volumes:
+      - cf_data:/var/lib/postgresql/data
+
+volumes:
+  cf_data:
