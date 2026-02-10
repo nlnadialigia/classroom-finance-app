@@ -8,7 +8,9 @@
       "add": "Adicionar",
       "back": "Voltar",
       "confirm": "Confirmar",
-      "generating": "Gerando..."
+      "generating": "Gerando...",
+      "saving": "Salvando...",
+      "saveChanges": "Salvar Alterações"
     },
     "labels": {
       "name": "Nome",
@@ -18,19 +20,41 @@
       "student": "Aluno",
       "month": "Mês",
       "year": "Ano",
-      "actions": "Ações"
+      "actions": "Ações",
+      "competence": "Competência",
+      "paymentDate": "Data de Pagamento",
+      "total": "Total"
     },
     "yes": "Sim",
     "no": "Não",
+    "year": "Ano",
+    "student": "Aluno",
+    "competence": "Competência",
+    "value": "Valor",
+    "paymentDate": "Data de Pagamento",
+    "total": "Total",
+    "date": "Data",
+    "description": "Descrição",
+    "actions": "Ações",
+    "selectStudent": "Selecione um aluno",
+    "selectMonth": "Selecione um mês",
+    "saving": "Salvando...",
     "errors": {
       "required": "Este campo é obrigatório",
       "invalid": "Valor inválido",
-      "generic": "Ocorreu um erro"
+      "generic": "Ocorreu um erro",
+      "saveError": "Erro ao salvar dados",
+      "updateError": "Erro ao atualizar dados",
+      "fillAllFields": "Por favor, preencha todos os campos"
+    },
+    "messages": {
+      "error": "Ocorreu um erro. Tente novamente."
     }
   },
   "nav": {
     "dashboard": "Dashboard",
     "students": "Alunos",
+    "guide": "Guia",
     "monthlyReceipts": "Recebimentos Mensais",
     "extraReceipts": "Recebimentos Extras",
     "expenses": "Gastos",
@@ -47,7 +71,20 @@
     "initialBalance": "Saldo Inicial",
     "totalRevenues": "Total de Receitas",
     "totalExpenses": "Total de Despesas",
-    "netBalance": "Saldo Líquido"
+    "netBalance": "Saldo Líquido",
+    "dre": {
+      "title": "Demonstração do Resultado",
+      "revenues": "Receitas",
+      "expenses": "Despesas",
+      "previousReceipts": "Recebimentos Anteriores",
+      "income": "Rendimentos"
+    },
+    "cards": {
+      "initialBalance": "Saldo Inicial",
+      "totalRevenues": "Total de Receitas",
+      "totalExpenses": "Total de Despesas",
+      "netBalance": "Saldo Líquido"
+    }
   },
   "students": {
     "title": "Alunos",
@@ -60,6 +97,8 @@
   "guidance": {
     "title": "Guia de Primeiros Passos",
     "subtitle": "Siga estes passos para configurar seu sistema de gestão financeira",
+    "stepByStep": "Passo a Passo",
+    "importantTips": "Dicas Importantes",
     "steps": {
       "1": {
         "title": "Configurar Sistema",
@@ -76,10 +115,109 @@
       "4": {
         "title": "Gerenciar Gastos",
         "description": "Registre suas despesas para controle financeiro completo"
+      },
+      "initialSettings": {
+        "title": "Configurações Iniciais",
+        "description": "Configure o sistema antes de começar",
+        "items": {
+          "0": "Acesse Configurações no menu lateral",
+          "1": "Defina o ano letivo (ex: 2024)",
+          "2": "Defina o valor mensal padrão",
+          "3": "Configure o saldo inicial se houver",
+          "4": "Salve as configurações"
+        }
+      },
+      "studentRegistration": {
+        "title": "Cadastro de Alunos",
+        "description": "Adicione seus alunos ao sistema",
+        "items": {
+          "0": "Ainda em Configurações, vá para a seção Alunos",
+          "1": "Clique em 'Novo Aluno'",
+          "2": "Digite o nome do aluno",
+          "3": "Defina o valor da mensalidade (pode ser diferente do padrão)",
+          "4": "Salve o aluno",
+          "5": "Repita para todos os alunos"
+        }
+      },
+      "monthlyControl": {
+        "title": "Controle Mensal",
+        "description": "Gerencie pagamentos de mensalidades",
+        "items": {
+          "0": "Acesse 'Recebimentos Mensais' no menu",
+          "1": "Selecione o aluno e o mês",
+          "2": "Informe o valor e a data de pagamento",
+          "3": "Clique em 'Adicionar à Lista' para adicionar mais recebimentos",
+          "4": "Clique em 'Salvar Recebimentos' quando terminar",
+          "5": "Marque recebimentos como pagos quando receber",
+          "6": "Visualize o histórico de pagamentos na tabela"
+        }
+      },
+      "extraReceipts": {
+        "title": "Recebimentos Extras",
+        "description": "Registre pagamentos adicionais",
+        "items": {
+          "0": "Acesse 'Recebimentos Extras' no menu",
+          "1": "Clique em 'Novo Recebimento Extra'",
+          "2": "Selecione o aluno e informe os detalhes",
+          "3": "Salve o recebimento",
+          "4": "Edite ou exclua recebimentos conforme necessário",
+          "5": "Visualize o total arrecadado no resumo"
+        }
+      },
+      "expenseControl": {
+        "title": "Controle de Gastos",
+        "description": "Gerencie suas despesas empresariais",
+        "items": {
+          "0": "Acesse 'Gastos' no menu",
+          "1": "Clique em 'Novo Gasto'",
+          "2": "Informe descrição e valor",
+          "3": "Defina a data de pagamento",
+          "4": "Salve o gasto",
+          "5": "Visualize o total de gastos no resumo"
+        }
+      },
+      "dashboardReports": {
+        "title": "Dashboard e Relatórios",
+        "description": "Monitore suas finanças",
+        "items": {
+          "0": "Acesse o Dashboard para ver a Demonstração do Resultado",
+          "1": "Confira os cards de resumo com totais",
+          "2": "Visualize o detalhamento mensal de receitas e despesas",
+          "3": "Monitore o saldo líquido",
+          "4": "Gere relatórios de alunos a partir de Recebimentos Mensais"
+        }
       }
+    },
+    "recommendedFlow": {
+      "title": "Fluxo de Trabalho Mensal Recomendado",
+      "description": "Siga esta rotina para melhor controle financeiro",
+      "steps": {
+        "0": "Início do mês: Revise o saldo do mês anterior",
+        "1": "Registre todos os recebimentos mensais conforme os alunos pagam",
+        "2": "Adicione recebimentos extras (materiais, aulas especiais, etc.)",
+        "3": "Registre todas as despesas realizadas durante o mês",
+        "4": "Fim do mês: Revise o Dashboard e gere relatórios"
+      },
+      "note": "Mantenha seus registros atualizados para um acompanhamento financeiro preciso"
     },
     "tips": {
       "title": "Dicas",
+      "valueFormatting": {
+        "title": "Formatação de Valores",
+        "description": "Todos os valores são automaticamente formatados em moeda brasileira (R$)"
+      },
+      "datesTimezone": {
+        "title": "Datas e Fuso Horário",
+        "description": "O sistema usa o fuso horário brasileiro (America/Sao_Paulo) para todas as datas"
+      },
+      "dataBackup": {
+        "title": "Backup de Dados",
+        "description": "Seus dados são salvos automaticamente no banco de dados"
+      },
+      "quickEdit": {
+        "title": "Edição Rápida",
+        "description": "Clique em qualquer item nas tabelas para editar ou excluir"
+      },
       "items": [
         "Use o dashboard para ter uma visão completa das suas finanças",
         "Gere recebimentos mensais automaticamente para todos os alunos",
@@ -96,17 +234,37 @@
     "title": "Recebimentos Mensais",
     "description": "Gerencie pagamentos de mensalidades",
     "newReceipt": "Novo Recebimento",
+    "addReceipt": "Adicionar Recebimento",
+    "editReceipt": "Editar Recebimento",
     "markAsPaid": "Marcar como Pago",
     "markAsUnpaid": "Marcar como Não Pago",
     "paid": "Pago",
     "unpaid": "Não Pago",
-    "paymentDate": "Data de Pagamento"
+    "paymentDate": "Data de Pagamento",
+    "receiptsToSave": "Recebimentos a Salvar",
+    "saveReceipts": "Salvar {count} Recebimento(s)",
+    "addToList": "Adicionar à Lista",
+    "receiptsSaved": "{count} recebimento(s) salvo(s) com sucesso",
+    "receiptUpdated": "Recebimento atualizado com sucesso",
+    "receiptAddedToList": "Recebimento adicionado à lista",
+    "addAtLeastOne": "Adicione pelo menos um recebimento antes de salvar",
+    "report": "Relatório",
+    "totalExpected": "Total Esperado",
+    "totalCollected": "Total Arrecadado",
+    "receiptsOf": "Recebimentos de",
+    "messages": {
+      "receiptsSaved": "{count} recebimento(s) salvo(s) com sucesso",
+      "receiptUpdated": "Recebimento atualizado com sucesso",
+      "receiptAddedToList": "Recebimento adicionado à lista",
+      "addAtLeastOne": "Adicione pelo menos um recebimento antes de salvar"
+    }
   },
   "extraReceipts": {
     "title": "Recebimentos Extras",
     "description": "Gerencie pagamentos adicionais e recebimentos únicos",
     "cardTitle": "Recebimentos Extras",
     "newReceipt": "Novo Recebimento Extra",
+    "addReceipt": "Adicionar Recebimento Extra",
     "editReceipt": "Editar Recebimento Extra",
     "totalCollected": "Total Arrecadado",
     "confirmDelete": "Tem certeza que deseja excluir este recebimento extra?",
@@ -137,12 +295,17 @@
     "title": "Configurações",
     "description": "Configure suas preferências do sistema",
     "generalSettings": "Configurações Gerais",
+    "generalSettingsDescription": "Configure ano letivo e valores padrão",
     "academicYear": "Ano Letivo",
     "defaultMonthlyValue": "Valor Mensal Padrão",
     "initialBalance": "Saldo Inicial",
     "monthlyValue": "Valor Mensal",
     "students": "Alunos",
+    "studentsDescription": "Gerencie seus alunos",
     "newStudent": "Novo Aluno",
+    "noStudentsRegistered": "Nenhum aluno cadastrado ainda",
+    "noConfigurationFound": "Nenhuma configuração encontrada",
+    "addConfiguration": "Adicionar Configuração",
     "name": "Nome",
     "monthlyReceipt": "Recebimento Mensal",
     "actions": "Ações"
@@ -153,9 +316,12 @@
     "magicLinks": "Magic Links",
     "generateAccessLinks": "Gerar Links de Acesso",
     "generateNewLinks": "Gerar Novos Links",
+    "generateLinks": "Gerar Links",
+    "addUser": "Adicionar Usuário",
     "user": "Usuário",
     "selectUser": "Selecionar Usuário",
     "generatedLinks": "Links Gerados",
+    "copyLinksDescription": "Copie os links abaixo para compartilhar com o usuário",
     "editorLink": "Link Editor",
     "viewerLink": "Link Visualizador",
     "copyEditorLink": "Copiar Link Editor",
@@ -169,19 +335,44 @@
     "magicLinksGenerated": "Magic links gerados com sucesso",
     "errorGeneratingMagicLinks": "Erro ao gerar magic links",
     "linkCopied": "Link copiado para a área de transferência",
+    "roles": {
+      "admin": "Admin",
+      "editor": "Editor",
+      "viewer": "Visualizador"
+    },
     "table": {
       "name": "Nome",
+      "username": "Usuário",
       "email": "Email",
       "role": "Função",
+      "editorLink": "Link Editor",
+      "viewerLink": "Link Visualizador",
       "createdAt": "Criado em",
       "actions": "Ações"
     },
-    "createUser": "Criar Usuário",
-    "editUser": "Editar Usuário",
+    "createUser": {
+      "title": "Criar Usuário",
+      "description": "Adicionar um novo usuário ao sistema",
+      "nameLabel": "Nome de Usuário",
+      "magicLinksNote": "Magic links serão gerados após a criação do usuário",
+      "create": "Criar Usuário",
+      "creating": "Criando..."
+    },
+    "editUser": {
+      "title": "Editar Usuário",
+      "description": "Atualizar informações do usuário",
+      "usernameLabel": "Nome de Usuário"
+    },
     "messages": {
       "userCreated": "Usuário criado com sucesso",
       "userUpdated": "Usuário atualizado com sucesso",
-      "userDeleted": "Usuário excluído com sucesso"
+      "userDeleted": "Usuário excluído com sucesso",
+      "userCreateError": "Erro ao criar usuário",
+      "userUpdateError": "Erro ao atualizar usuário",
+      "userDeleteError": "Erro ao excluir usuário",
+      "linksGenerated": "Links gerados com sucesso",
+      "linksGenerateError": "Erro ao gerar links",
+      "linkCopied": "Link copiado para a área de transferência"
     }
   },
   "auth": {
@@ -193,6 +384,8 @@
     "sendMagicLink": "Enviar Magic Link",
     "checkEmail": "Verifique seu email para o magic link",
     "invalidLink": "Link inválido ou expirado",
-    "accessDenied": "Acesso negado"
+    "accessDenied": "Acesso negado",
+    "magicLinkSent": "Acesso via Magic Link",
+    "invalidToken": "Credenciais inválidas. Tente novamente."
   }
 }

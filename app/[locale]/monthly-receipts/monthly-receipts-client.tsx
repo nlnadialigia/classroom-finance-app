@@ -34,12 +34,12 @@ import {
 } from "@/components/ui/table";
 import { usePermissions } from "@/hooks/use-permissions";
 import { Config, FullStudent, Student } from "@/lib/types";
-import { months } from "@/utils/date";
+import { getMonthNames } from "@/utils/date";
 import { useMutation } from "@tanstack/react-query";
 import { Download, FileText, Plus } from "lucide-react";
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { useTranslations } from "next-intl";
 
 interface MonthlyReceiptsData {
   students: FullStudent[];
@@ -56,6 +56,8 @@ export function MonthlyReceiptsClient({
 }: MonthlyReceiptsClientProps) {
   const t = useTranslations();
   const { canEdit } = usePermissions();
+  const locale = useLocale();
+  const months = getMonthNames(locale);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [students, setStudents] = useState(initialData.students);
   const [pendingReceipts, setPendingReceipts] = useState<any[]>([]);

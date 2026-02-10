@@ -3,7 +3,8 @@
 import { verifyPassword } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 import { createSession } from "@/lib/session";
-import { redirect } from "next/navigation";
+import { redirect as nextRedirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { userService } from "../services/user-service";
 
 export async function loginAction(formData: FormData): Promise<void> {
@@ -14,14 +15,18 @@ export async function loginAction(formData: FormData): Promise<void> {
 
   if (!user || !user.password) {
     logger.error("Usuário não encontrado ou sem senha", 'AUTH', { username });
-    redirect("/login?error=invalid");
+    const cookieStore = await cookies();
+    const locale = cookieStore.get("NEXT_LOCALE")?.value || "pt";
+    nextRedirect(`/${locale}/login?error=invalid`);
   }
 
   const isValid = verifyPassword(password, user.password);
 
   if (!isValid) {
     logger.error("Senha inválida", 'AUTH', { username });
-    redirect("/login?error=invalid");
+    const cookieStore = await cookies();
+    const locale = cookieStore.get("NEXT_LOCALE")?.value || "pt";
+    nextRedirect(`/${locale}/login?error=invalid`);
   }
 
   // Criar sessão usando a nova função
@@ -29,10 +34,14 @@ export async function loginAction(formData: FormData): Promise<void> {
 
   logger.auth(`Login bem-sucedido`, { username: user.username, role: user.role });
 
+  // Get locale for redirect
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("NEXT_LOCALE")?.value || "pt";
+
   // Redirect baseado no role
   if (user.role === "ADMIN") {
-    redirect("/admin");
+    nextRedirect(`/${locale}/admin`);
   } else {
-    redirect("/dashboard");
+    nextRedirect(`/${locale}/dashboard`);
   }
 }

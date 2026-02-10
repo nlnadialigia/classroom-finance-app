@@ -17,10 +17,16 @@ import { usePathname } from "@/i18n/routing";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
+import { useEffect, useState } from "react";
 
 export function Navigation() {
   const pathname = usePathname();
   const t = useTranslations();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { data: session } = useQuery({
     queryKey: ["session"],
@@ -52,10 +58,15 @@ export function Navigation() {
 
   // Add students only for editors
   if (session?.user?.role === "EDITOR") {
-    navItems.push({ href: "/students", label: t('nav.students'), icon: HelpCircle });
+    navItems.push({ href: "/guide", label: t('nav.guide'), icon: HelpCircle });
   }
 
-  if (pathname === "/admin") {
+  // Add admin and magic links for admins
+  if (session?.user?.role === "ADMIN") {
+    navItems.push({ href: "/admin", label: t('nav.admin'), icon: ShieldCheck });
+  }
+
+  if (pathname === "/admin" || pathname === "/magic-links") {
     navItems = [
       { href: "/admin", label: t('nav.admin'), icon: ShieldCheck }
     ];
@@ -68,7 +79,7 @@ export function Navigation() {
         <Menubar className="border-none">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive = mounted && pathname === item.href;
 
             return (
               <MenubarMenu key={item.href}>

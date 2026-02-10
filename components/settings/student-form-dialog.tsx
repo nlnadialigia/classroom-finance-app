@@ -16,8 +16,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import logger from "@/lib/logger";
 import type { FullStudent } from "@/lib/types";
-import { months } from "@/utils/date";
+import { getMonthNames } from "@/utils/date";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 
 interface StudentFormDialogProps {
@@ -30,6 +31,8 @@ interface StudentFormDialogProps {
 
 export function StudentFormDialog({ open, onOpenChange, student, userId }: StudentFormDialogProps) {
   const queryClient = useQueryClient();
+  const locale = useLocale();
+  const months = getMonthNames(locale);
   const [name, setName] = useState(student?.name || "");
   const [isMonthlyReceipt, setIsMonthlyReceipt] = useState(student?.isMonthlyReceipt ?? true);
   const [monthlyPeriods, setMonthlyPeriods] = useState<number[]>(
