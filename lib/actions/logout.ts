@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import logger from "../logger";
 import { sessionService } from "../services/session-service";
-import { redirect } from "next/navigation";
+import { redirect as nextRedirect } from "next/navigation";
 
 export async function logout() {
   logger.auth("Logout iniciado");
@@ -18,5 +18,7 @@ export async function logout() {
     logger.session("Sessão removida", {sessionId});
   }
 
-  redirect("/login");
+  // Get locale from cookie or default to 'pt'
+  const locale = cookieStore.get("NEXT_LOCALE")?.value || "pt";
+  nextRedirect(`/${locale}/login`);
 }

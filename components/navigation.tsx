@@ -13,11 +13,20 @@ import {
   Settings,
   ShieldCheck,
 } from "lucide-react";
-import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "./language-switcher";
+import { useEffect, useState } from "react";
 
 export function Navigation() {
   const pathname = usePathname();
+  const t = useTranslations();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { data: session } = useQuery({
     queryKey: ["session"],
@@ -32,29 +41,34 @@ export function Navigation() {
   };
 
   let navItems = [
-    { href: "/dashboard", label: "Resumo", icon: BarChart3 },
+    { href: "/dashboard", label: t('nav.dashboard'), icon: BarChart3 },
     {
-      href: "/recebimento-mensal",
-      label: "Recebimento Mensal",
+      href: "/monthly-receipts",
+      label: t('nav.monthlyReceipts'),
       icon: CalendarDays,
     },
     {
-      href: "/recebimento-extra",
-      label: "Recebimento Extra",
+      href: "/extra-receipts",
+      label: t('nav.extraReceipts'),
       icon: PlusCircle,
     },
-    { href: "/gastos", label: "Gastos", icon: Receipt },
-    { href: "/configuracoes", label: "Configurações", icon: Settings },
+    { href: "/expenses", label: t('nav.expenses'), icon: Receipt },
+    { href: "/settings", label: t('nav.settings'), icon: Settings },
   ];
 
-  // Adicionar orientação apenas para editores
+  // Add students only for editors
   if (session?.user?.role === "EDITOR") {
-    navItems.push({ href: "/orientacao", label: "Orientação", icon: HelpCircle });
+    navItems.push({ href: "/guide", label: t('nav.guide'), icon: HelpCircle });
   }
 
-  if (pathname === "/admin") {
+  // Add admin and magic links for admins
+  if (session?.user?.role === "ADMIN") {
+    navItems.push({ href: "/admin", label: t('nav.admin'), icon: ShieldCheck });
+  }
+
+  if (pathname === "/admin" || pathname === "/magic-links") {
     navItems = [
-      { href: "/admin", label: "Admin", icon: ShieldCheck }
+      { href: "/admin", label: t('nav.admin'), icon: ShieldCheck }
     ];
   }
 
@@ -65,18 +79,18 @@ export function Navigation() {
         <Menubar className="border-none">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive = mounted && pathname === item.href;
 
             return (
               <MenubarMenu key={item.href}>
                 <MenubarTrigger asChild>
-                  <NextLink
+                  <Link
                     href={item.href}
                     className={`flex items-center gap-2 ${isActive ? "bg-accent text-accent-foreground" : ""}`}
                   >
                     <Icon className="size-4" />
                     {item.label}
-                  </NextLink>
+                  </Link>
                 </MenubarTrigger>
               </MenubarMenu>
             );
@@ -84,13 +98,14 @@ export function Navigation() {
         </Menubar>
 
         <div className="flex items-center space-x-4">
+          <LanguageSwitcher />
           {session?.user && (
             <span className="text-sm text-muted-foreground">
               {session.user.username} {userRole}
             </span>
           )}
           <Button variant="outline" size="sm" onClick={handleLogout}>
-            Sair
+            {t('nav.logout')}
           </Button>
         </div>
       </div>

@@ -1,0 +1,391 @@
+{
+  "common": {
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "add": "Add",
+      "back": "Back",
+      "confirm": "Confirm",
+      "generating": "Generating...",
+      "saving": "Saving...",
+      "saveChanges": "Save Changes"
+    },
+    "labels": {
+      "name": "Name",
+      "value": "Value",
+      "date": "Date",
+      "description": "Description",
+      "student": "Student",
+      "month": "Month",
+      "year": "Year",
+      "actions": "Actions",
+      "competence": "Competence",
+      "paymentDate": "Payment Date",
+      "total": "Total"
+    },
+    "yes": "Yes",
+    "no": "No",
+    "year": "Year",
+    "student": "Student",
+    "competence": "Competence",
+    "value": "Value",
+    "paymentDate": "Payment Date",
+    "total": "Total",
+    "date": "Date",
+    "description": "Description",
+    "actions": "Actions",
+    "selectStudent": "Select a student",
+    "selectMonth": "Select a month",
+    "saving": "Saving...",
+    "errors": {
+      "required": "This field is required",
+      "invalid": "Invalid value",
+      "generic": "An error occurred",
+      "saveError": "Error saving data",
+      "updateError": "Error updating data",
+      "fillAllFields": "Please fill in all fields"
+    },
+    "messages": {
+      "error": "An error occurred. Please try again."
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "students": "Students",
+    "guide": "Guide",
+    "monthlyReceipts": "Monthly Receipts",
+    "extraReceipts": "Extra Receipts",
+    "expenses": "Expenses",
+    "settings": "Settings",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "incomeStatement": "Income Statement",
+    "revenues": "Revenues",
+    "expenses": "Expenses",
+    "balance": "Balance",
+    "initialBalance": "Initial Balance",
+    "totalRevenues": "Total Revenues",
+    "totalExpenses": "Total Expenses",
+    "netBalance": "Net Balance",
+    "dre": {
+      "title": "Income Statement",
+      "revenues": "Revenues",
+      "expenses": "Expenses",
+      "previousReceipts": "Previous Receipts",
+      "income": "Income"
+    },
+    "cards": {
+      "initialBalance": "Initial Balance",
+      "totalRevenues": "Total Revenues",
+      "totalExpenses": "Total Expenses",
+      "netBalance": "Net Balance"
+    }
+  },
+  "students": {
+    "title": "Students",
+    "newStudent": "New Student",
+    "editStudent": "Edit Student",
+    "deleteStudent": "Delete Student",
+    "confirmDelete": "Are you sure you want to delete this student?",
+    "monthlyValue": "Monthly Value"
+  },
+  "guidance": {
+    "title": "Getting Started Guide",
+    "subtitle": "Follow these steps to set up your financial management system",
+    "stepByStep": "Step by Step",
+    "importantTips": "Important Tips",
+    "steps": {
+      "1": {
+        "title": "Configure Settings",
+        "description": "Set up your academic year and default monthly values"
+      },
+      "2": {
+        "title": "Add Students",
+        "description": "Register your students with their monthly tuition values"
+      },
+      "3": {
+        "title": "Record Receipts",
+        "description": "Track monthly and extra payments from students"
+      },
+      "4": {
+        "title": "Manage Expenses",
+        "description": "Record your business expenses for complete financial control"
+      },
+      "initialSettings": {
+        "title": "Initial Settings",
+        "description": "Configure the system before starting",
+        "items": {
+          "0": "Access Settings in the side menu",
+          "1": "Set the academic year (e.g., 2024)",
+          "2": "Define the default monthly value",
+          "3": "Set the initial balance if you have one",
+          "4": "Save the settings"
+        }
+      },
+      "studentRegistration": {
+        "title": "Student Registration",
+        "description": "Add your students to the system",
+        "items": {
+          "0": "Still in Settings, go to the Students section",
+          "1": "Click 'New Student'",
+          "2": "Enter the student's name",
+          "3": "Set the monthly tuition value (can be different from default)",
+          "4": "Save the student",
+          "5": "Repeat for all students"
+        }
+      },
+      "monthlyControl": {
+        "title": "Monthly Control",
+        "description": "Manage monthly tuition payments",
+        "items": {
+          "0": "Access 'Monthly Receipts' in the menu",
+          "1": "Select the student and month",
+          "2": "Enter the value and payment date",
+          "3": "Click 'Add to List' to add more receipts",
+          "4": "Click 'Save Receipts' when done",
+          "5": "Mark receipts as paid when payment is received",
+          "6": "View payment history in the table"
+        }
+      },
+      "extraReceipts": {
+        "title": "Extra Receipts",
+        "description": "Record additional payments",
+        "items": {
+          "0": "Access 'Extra Receipts' in the menu",
+          "1": "Click 'New Extra Receipt'",
+          "2": "Select the student and enter details",
+          "3": "Save the receipt",
+          "4": "Edit or delete receipts as needed",
+          "5": "View total collected in the summary"
+        }
+      },
+      "expenseControl": {
+        "title": "Expense Control",
+        "description": "Manage your business expenses",
+        "items": {
+          "0": "Access 'Expenses' in the menu",
+          "1": "Click 'New Expense'",
+          "2": "Enter description and value",
+          "3": "Set the payment date",
+          "4": "Save the expense",
+          "5": "View total expenses in the summary"
+        }
+      },
+      "dashboardReports": {
+        "title": "Dashboard and Reports",
+        "description": "Monitor your finances",
+        "items": {
+          "0": "Access the Dashboard to view the Income Statement",
+          "1": "Check summary cards with totals",
+          "2": "View monthly breakdown of revenues and expenses",
+          "3": "Monitor net balance",
+          "4": "Generate student reports from Monthly Receipts"
+        }
+      }
+    },
+    "recommendedFlow": {
+      "title": "Recommended Monthly Workflow",
+      "description": "Follow this routine for better financial control",
+      "steps": {
+        "0": "Start of month: Review previous month's balance",
+        "1": "Record all monthly receipts as students pay",
+        "2": "Add any extra receipts (materials, special classes, etc.)",
+        "3": "Record all expenses incurred during the month",
+        "4": "End of month: Review Dashboard and generate reports"
+      },
+      "note": "Keep your records up to date for accurate financial tracking"
+    },
+    "tips": {
+      "title": "Tips",
+      "valueFormatting": {
+        "title": "Value Formatting",
+        "description": "All values are automatically formatted in Brazilian currency (R$)"
+      },
+      "datesTimezone": {
+        "title": "Dates and Timezone",
+        "description": "The system uses Brazilian timezone (America/Sao_Paulo) for all dates"
+      },
+      "dataBackup": {
+        "title": "Data Backup",
+        "description": "Your data is automatically saved in the database"
+      },
+      "quickEdit": {
+        "title": "Quick Edit",
+        "description": "Click on any item in the tables to edit or delete"
+      },
+      "items": [
+        "Use the dashboard to get a complete overview of your finances",
+        "Generate monthly receipts automatically for all students",
+        "Keep track of extra payments separately from monthly tuition",
+        "Categorize expenses for better financial analysis"
+      ]
+    },
+    "workflow": {
+      "title": "Recommended Workflow",
+      "description": "For best results, follow this monthly routine"
+    }
+  },
+  "monthlyReceipts": {
+    "title": "Monthly Receipts",
+    "description": "Manage monthly tuition payments",
+    "newReceipt": "New Receipt",
+    "addReceipt": "Add Receipt",
+    "editReceipt": "Edit Receipt",
+    "markAsPaid": "Mark as Paid",
+    "markAsUnpaid": "Mark as Unpaid",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "paymentDate": "Payment Date",
+    "receiptsToSave": "Receipts to Save",
+    "saveReceipts": "Save {count} Receipt(s)",
+    "addToList": "Add to List",
+    "receiptsSaved": "{count} receipt(s) saved successfully",
+    "receiptUpdated": "Receipt updated successfully",
+    "receiptAddedToList": "Receipt added to list",
+    "addAtLeastOne": "Add at least one receipt before saving",
+    "report": "Report",
+    "totalExpected": "Total Expected",
+    "totalCollected": "Total Collected",
+    "receiptsOf": "Receipts of",
+    "messages": {
+      "receiptsSaved": "{count} receipt(s) saved successfully",
+      "receiptUpdated": "Receipt updated successfully",
+      "receiptAddedToList": "Receipt added to list",
+      "addAtLeastOne": "Add at least one receipt before saving"
+    }
+  },
+  "extraReceipts": {
+    "title": "Extra Receipts",
+    "description": "Manage additional payments and one-time receipts",
+    "cardTitle": "Extra Receipts",
+    "newReceipt": "New Extra Receipt",
+    "addReceipt": "Add Extra Receipt",
+    "editReceipt": "Edit Extra Receipt",
+    "totalCollected": "Total Collected",
+    "confirmDelete": "Are you sure you want to delete this extra receipt?",
+    "errors": {
+      "loadingReceipts": "Error loading extra receipts",
+      "creatingReceipt": "Error creating extra receipt",
+      "updatingReceipt": "Error updating extra receipt",
+      "deletingReceipt": "Error deleting extra receipt"
+    },
+    "messages": {
+      "receiptCreated": "Extra receipt created successfully",
+      "receiptUpdated": "Extra receipt updated successfully",
+      "receiptDeleted": "Extra receipt deleted successfully"
+    }
+  },
+  "expenses": {
+    "title": "Expenses",
+    "subtitle": "Manage your business expenses",
+    "newExpense": "New Expense",
+    "editExpense": "Edit Expense",
+    "listTitle": "Expense List",
+    "totalExpenses": "Total Expenses",
+    "confirmDelete": "Are you sure you want to delete this expense?",
+    "category": "Category",
+    "paymentDate": "Payment Date"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your system preferences",
+    "generalSettings": "General Settings",
+    "generalSettingsDescription": "Configure academic year and default values",
+    "academicYear": "Academic Year",
+    "defaultMonthlyValue": "Default Monthly Value",
+    "initialBalance": "Initial Balance",
+    "monthlyValue": "Monthly Value",
+    "students": "Students",
+    "studentsDescription": "Manage your students",
+    "newStudent": "New Student",
+    "noStudentsRegistered": "No students registered yet",
+    "noConfigurationFound": "No configuration found",
+    "addConfiguration": "Add Configuration",
+    "name": "Name",
+    "monthlyReceipt": "Monthly Receipt",
+    "actions": "Actions"
+  },
+  "admin": {
+    "title": "Administration",
+    "users": "Users",
+    "magicLinks": "Magic Links",
+    "generateAccessLinks": "Generate Access Links",
+    "generateNewLinks": "Generate New Links",
+    "generateLinks": "Generate Links",
+    "addUser": "Add User",
+    "user": "User",
+    "selectUser": "Select User",
+    "generatedLinks": "Generated Links",
+    "copyLinksDescription": "Copy the links below to share with the user",
+    "editorLink": "Editor Link",
+    "viewerLink": "Viewer Link",
+    "copyEditorLink": "Copy Editor Link",
+    "copyViewerLink": "Copy Viewer Link",
+    "usersWithActiveLinks": "Users with Active Links",
+    "activeLinksDescription": "Users who have active magic links for system access",
+    "copyEditor": "Copy Editor",
+    "copyViewer": "Copy Viewer",
+    "noLinkGenerated": "No link generated",
+    "noUsersWithActiveLinks": "No users with active links",
+    "magicLinksGenerated": "Magic links generated successfully",
+    "errorGeneratingMagicLinks": "Error generating magic links",
+    "linkCopied": "Link copied to clipboard",
+    "roles": {
+      "admin": "Admin",
+      "editor": "Editor",
+      "viewer": "Viewer"
+    },
+    "table": {
+      "name": "Name",
+      "username": "Username",
+      "email": "Email",
+      "role": "Role",
+      "editorLink": "Editor Link",
+      "viewerLink": "Viewer Link",
+      "createdAt": "Created At",
+      "actions": "Actions"
+    },
+    "createUser": {
+      "title": "Create User",
+      "description": "Add a new user to the system",
+      "nameLabel": "Username",
+      "magicLinksNote": "Magic links will be generated after user creation",
+      "create": "Create User",
+      "creating": "Creating..."
+    },
+    "editUser": {
+      "title": "Edit User",
+      "description": "Update user information",
+      "usernameLabel": "Username"
+    },
+    "messages": {
+      "userCreated": "User created successfully",
+      "userUpdated": "User updated successfully",
+      "userDeleted": "User deleted successfully",
+      "userCreateError": "Error creating user",
+      "userUpdateError": "Error updating user",
+      "userDeleteError": "Error deleting user",
+      "linksGenerated": "Links generated successfully",
+      "linksGenerateError": "Error generating links",
+      "linkCopied": "Link copied to clipboard"
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "magicLink": "Magic Link",
+    "sendMagicLink": "Send Magic Link",
+    "checkEmail": "Check your email for the magic link",
+    "invalidLink": "Invalid or expired link",
+    "accessDenied": "Access denied",
+    "magicLinkSent": "Magic Link Access",
+    "invalidToken": "Invalid credentials. Please try again."
+  }
+}

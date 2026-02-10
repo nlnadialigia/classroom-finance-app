@@ -1,11 +1,9 @@
-version: "3.9"
-
 services:
   cf:
-    image: postgres:16
+    image: postgres:18-alpine
     container_name: cf
     ports:
-      - "8000:5432"
+      - "6002:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
