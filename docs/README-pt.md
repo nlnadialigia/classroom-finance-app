@@ -1,6 +1,6 @@
 # Classroom Finance App
 
-Sistema de gestão financeira para professores particulares, desenvolvido com Next.js 16 e Prisma.
+Sistema de gestão financeira de turma, desenvolvido com Next.js 16 e Prisma.
 
 ## 📋 Funcionalidades
 
