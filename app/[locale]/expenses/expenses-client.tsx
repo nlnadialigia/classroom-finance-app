@@ -9,6 +9,7 @@ import { Config } from "@/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface ExpensesData {
   expenses: any[];
@@ -21,6 +22,7 @@ interface ExpensesClientProps {
 }
 
 export function ExpensesClient({ initialData }: ExpensesClientProps) {
+  const t = useTranslations();
   const { canEdit } = usePermissions();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingExpense, setEditingExpense] = useState<any>(null);
@@ -48,7 +50,7 @@ export function ExpensesClient({ initialData }: ExpensesClientProps) {
   });
 
   const handleDeleteExpense = (id: string) => {
-    if (confirm("Tem certeza que deseja excluir este gasto?")) {
+    if (confirm(t('expenses.confirmDelete'))) {
       deleteExpenseMutation.mutate(id);
     }
   };
@@ -69,20 +71,20 @@ export function ExpensesClient({ initialData }: ExpensesClientProps) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Gastos</h1>
-          <p className="text-muted-foreground">Gerencie os gastos do sistema</p>
+          <h1 className="text-3xl font-bold">{t('expenses.title')}</h1>
+          <p className="text-muted-foreground">{t('expenses.subtitle')}</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 font-bold">
-              <p>Ano:</p>
+              <p>{t('common.labels.year')}:</p>
               <p>{initialData.config?.year}</p>
             </div>
           </div>
           {canEdit && (
             <Button onClick={() => setDialogOpen(true)}>
               <Plus className="size-4 mr-2" />
-              Novo Gasto
+              {t('expenses.newExpense')}
             </Button>
           )}
         </div>
@@ -90,19 +92,19 @@ export function ExpensesClient({ initialData }: ExpensesClientProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Lista de Gastos</CardTitle>
+          <CardTitle>{t('expenses.listTitle')}</CardTitle>
           <CardDescription>
-            Total de gastos: <span className="font-bold">R$ {totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            {t('expenses.totalExpenses')}: <span className="font-bold">R$ {totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Data</TableHead>
-                <TableHead>Descrição</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
-                {canEdit && <TableHead className="text-right">Ações</TableHead>}
+                <TableHead>{t('common.labels.date')}</TableHead>
+                <TableHead>{t('common.labels.description')}</TableHead>
+                <TableHead className="text-right">{t('common.labels.value')}</TableHead>
+                {canEdit && <TableHead className="text-right">{t('common.labels.actions')}</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -143,7 +145,7 @@ export function ExpensesClient({ initialData }: ExpensesClientProps) {
               })}
               <TableRow className="border-t-2 bg-muted/50">
                 <TableCell colSpan={canEdit ? 3 : 2} className="font-bold">
-                  TOTAL
+                  {t('common.labels.total').toUpperCase()}
                 </TableCell>
                 <TableCell className="text-right font-bold text-red-600">
                   R$ {totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

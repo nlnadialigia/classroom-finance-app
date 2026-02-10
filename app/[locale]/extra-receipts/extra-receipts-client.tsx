@@ -12,6 +12,7 @@ import { ptBR } from "date-fns/locale";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface ExtraReceiptsData {
   students: any[];
@@ -25,6 +26,7 @@ interface ExtraReceiptsClientProps {
 }
 
 export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
+  const t = useTranslations();
   const { canEdit } = usePermissions();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingReceipt, setEditingReceipt] = useState<any>(null);
@@ -34,7 +36,7 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
     queryKey: ["students", initialData.userId],
     queryFn: async () => {
       const response = await fetch(`/api/students?userId=${initialData.userId}`);
-      if (!response.ok) throw new Error('Failed to fetch students');
+      if (!response.ok) throw new Error(t('common.errors.fetchStudents'));
       return response.json();
     },
     initialData: initialData.students || [],
@@ -44,7 +46,7 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
     queryKey: ["extraReceipts", initialData.userId],
     queryFn: async () => {
       const response = await fetch(`/api/extra-receipts?userId=${initialData.userId}`);
-      if (!response.ok) throw new Error('Failed to fetch extra receipts');
+      if (!response.ok) throw new Error(t('common.errors.fetchExtraReceipts'));
       return response.json();
     },
     initialData: initialData.extraReceipts || [],
@@ -55,15 +57,15 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
       const response = await fetch(`/api/extra-receipts/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error('Erro ao excluir recebimento');
+      if (!response.ok) throw new Error(t('extraReceipts.errors.deleteError'));
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["extraReceipts", initialData.userId] });
-      toast.success("Recebimento excluído com sucesso!");
+      toast.success(t('extraReceipts.messages.deleteSuccess'));
     },
     onError: () => {
-      toast.error("Erro ao excluir recebimento");
+      toast.error(t('extraReceipts.errors.deleteError'));
     }
   });
 
@@ -81,7 +83,7 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja excluir este recebimento?")) {
+    if (confirm(t('extraReceipts.confirmDelete'))) {
       deleteReceiptMutation.mutate(id);
     }
   };
@@ -95,20 +97,20 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Recebimento Extra</h1>
-          <p className="text-muted-foreground">Controle de recebimentos extras dos alunos</p>
+          <h1 className="text-3xl font-bold">{t('extraReceipts.title')}</h1>
+          <p className="text-muted-foreground">{t('extraReceipts.description')}</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 font-bold">
-              <p>Ano:</p>
+              <p>{t('common.year')}:</p>
               <p>{initialData.config?.year}</p>
             </div>
           </div>
           {canEdit && (
             <Button onClick={() => setDialogOpen(true)}>
               <Plus className="size-4 mr-2" />
-              Novo Recebimento
+              {t('extraReceipts.addReceipt')}
             </Button>
           )}
         </div>
@@ -116,20 +118,20 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Recebimentos Extras de {initialData.config?.year}</CardTitle>
+          <CardTitle>{t('extraReceipts.cardTitle', { year: initialData.config?.year })}</CardTitle>
           <CardDescription>
-            Total arrecadado: <span className="font-bold">R$ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            {t('extraReceipts.totalCollected')}: <span className="font-bold">R$ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Data</TableHead>
-                <TableHead>Aluno</TableHead>
-                <TableHead>Descrição</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
-                {canEdit && <TableHead className="text-right">Ações</TableHead>}
+                <TableHead>{t('common.date')}</TableHead>
+                <TableHead>{t('common.student')}</TableHead>
+                <TableHead>{t('common.description')}</TableHead>
+                <TableHead className="text-right">{t('common.value')}</TableHead>
+                {canEdit && <TableHead className="text-right">{t('common.actions')}</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -174,7 +176,7 @@ export function ExtraReceiptsClient({ initialData }: ExtraReceiptsClientProps) {
               })}
               <TableRow className="border-t-2 bg-muted/50">
                 <TableCell colSpan={canEdit ? 4 : 3} className="font-bold">
-                  TOTAL
+                  {t('common.total')}
                 </TableCell>
                 <TableCell className="text-right font-bold text-green-600">
                   R$ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

@@ -1,211 +1,223 @@
 # Classroom Finance App
 
-Sistema de gestão financeira para professores particulares, desenvolvido com Next.js 16 e Prisma.
+Financial management system for private tutors, built with Next.js 16 and Prisma.
 
-## 📋 Funcionalidades
+[Versão em português](docs/pt/README-pt.md)
 
-### 🎯 Gestão de Alunos
-- Cadastro e gerenciamento de alunos
-- Configuração de períodos de mensalidade personalizados
-- Controle de recebimentos mensais e extras
-- Relatórios individuais por aluno
+## 🌐 Languages
 
-### 💰 Controle Financeiro Completo
-- **Recebimentos Mensais**: 
-  - Controle de mensalidades por aluno
-  - Marcação de pagamentos com data
-  - Visualização em tabela por mês/aluno
-  - Edição e exclusão de recebimentos
-  - Relatórios detalhados por estudante
-  
-- **Recebimentos Extras**: 
-  - Registro de valores adicionais
-  - CRUD completo (criar, editar, excluir)
-  - Filtro por ano letivo
-  - Associação com alunos específicos
-  
-- **Gastos/Despesas**: 
-  - Controle completo de despesas
-  - CRUD completo (criar, editar, excluir)
-  - Categorização por descrição
-  - Controle por data de pagamento
-  
-- **Rendimentos e Recebimentos Anteriores**:
-  - Registro de rendimentos de investimentos
-  - Controle de recebimentos de anos anteriores
-  - Integração com dashboard principal
+This application is available in:
+- **English (EN)** - Default
+- **Portuguese (PT-BR)**
 
-### 📊 Dashboard Inteligente
-- **Demonstração do Resultado do Exercício (DRE)**:
-  - Visão mensal completa de receitas e despesas
-  - Cálculo automático de saldos
-  - Formatação monetária brasileira (pt-BR)
-  - Separação por tipo de receita/despesa
-  
-- **Cards de Resumo**:
-  - Saldo inicial configurável
-  - Total de receitas do período
-  - Total de despesas do período
-  - Saldo líquido calculado automaticamente
-  
-- **Correção de Timezone**:
-  - Processamento correto de datas no timezone brasileiro
-  - Evita divergências de mês por problemas de UTC
+Access: `http://localhost:3000/en` or `http://localhost:3000/pt`
 
-### 👥 Sistema de Usuários Avançado
-- **Autenticação Segura**:
-  - Magic links por email
-  - Sessões com expiração automática
-  - Tokens únicos por usuário
-  
-- **Níveis de Acesso**:
-  - **Admin**: Acesso total + gerenciamento de usuários
-  - **Editor**: Pode criar, editar e excluir dados
-  - **Viewer**: Apenas visualização
-  
-- **Painel Administrativo**:
-  - Criação e gerenciamento de usuários
-  - Geração de magic links para acesso
-  - Controle de permissões por usuário
+See [i18n documentation](docs/i18n.md) for details.
 
-### ⚙️ Configurações Flexíveis
-- **Configuração Anual**:
-  - Definição de ano letivo
-  - Valor mensal padrão configurável
-  - Saldo anterior/inicial
+## 📋 Features
+
+### 🎯 Student Management
+- Student registration and management
+- Custom tuition period configuration
+- Monthly and extra payment tracking
+- Individual student reports
+
+### 💰 Complete Financial Control
+- **Monthly Receipts**: 
+  - Tuition control per student
+  - Payment marking with date
+  - Table view by month/student
+  - Receipt editing and deletion
+  - Detailed student reports
   
-- **Interface Otimizada**:
-  - Loading states e skeletons
-  - Prevenção de flash de conteúdo
-  - Experiência de usuário suave
+- **Extra Receipts**: 
+  - Additional payment records
+  - Full CRUD (create, edit, delete)
+  - Filter by academic year
+  - Association with specific students
+  
+- **Expenses**: 
+  - Complete expense control
+  - Full CRUD (create, edit, delete)
+  - Categorization by description
+  - Payment date tracking
+  
+- **Income and Previous Receipts**:
+  - Investment income records
+  - Previous year receipts tracking
+  - Integration with main dashboard
 
-### 📱 Interface Moderna
-- **Design Responsivo**: Funciona em desktop, tablet e mobile
-- **Componentes Reutilizáveis**: Interface consistente em todo o sistema
-- **Feedback Visual**: Toasts, loading states e confirmações
-- **Formatação Brasileira**: Valores monetários e datas no padrão nacional
+### 📊 Smart Dashboard
+- **Income Statement (DRE)**:
+  - Complete monthly view of revenues and expenses
+  - Automatic balance calculation
+  - Brazilian currency formatting (pt-BR)
+  - Separation by revenue/expense type
+  
+- **Summary Cards**:
+  - Configurable initial balance
+  - Total period revenues
+  - Total period expenses
+  - Automatically calculated net balance
+  
+- **Timezone Correction**:
+  - Correct date processing in Brazilian timezone
+  - Prevents month discrepancies from UTC issues
 
-## 🚀 Tecnologias
+### 👥 Advanced User System
+- **Secure Authentication**:
+  - Magic links via email
+  - Sessions with automatic expiration
+  - Unique tokens per user
+  
+- **Access Levels**:
+  - **Admin**: Full access + user management
+  - **Editor**: Can create, edit and delete data
+  - **Viewer**: View only
+  
+- **Administrative Panel**:
+  - User creation and management
+  - Magic link generation for access
+  - Per-user permission control
+
+### ⚙️ Flexible Settings
+- **Annual Configuration**:
+  - Academic year definition
+  - Configurable default monthly value
+  - Previous/initial balance
+  
+- **Optimized Interface**:
+  - Loading states and skeletons
+  - Content flash prevention
+  - Smooth user experience
+
+### 📱 Modern Interface
+- **Responsive Design**: Works on desktop, tablet and mobile
+- **Reusable Components**: Consistent interface throughout the system
+- **Visual Feedback**: Toasts, loading states and confirmations
+- **Brazilian Formatting**: Currency values and dates in national standard
+
+## 🚀 Technologies
 
 - **Framework**: Next.js 16 (App Router)
-- **Banco de Dados**: PostgreSQL com Prisma ORM
+- **Database**: PostgreSQL with Prisma ORM
 - **UI**: Tailwind CSS + Radix UI
-- **Autenticação**: Sistema próprio com magic links
-- **Validação**: Zod
-- **Formulários**: React Hook Form
-- **Tabelas**: AG Grid
-- **Notificações**: Sonner
-- **Estado**: TanStack Query (React Query)
+- **Authentication**: Custom system with magic links
+- **Validation**: Zod
+- **Forms**: React Hook Form
+- **Tables**: AG Grid
+- **Notifications**: Sonner
+- **State**: TanStack Query (React Query)
 
-## 📦 Instalação
+## 📦 Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
 git clone <repository-url>
 cd classroom-finance-app
 ```
 
-2. Instale as dependências:
+2. Install dependencies:
 ```bash
 pnpm install
 ```
 
-3. Configure as variáveis de ambiente:
+3. Configure environment variables:
 ```bash
 cp .env.example .env
 ```
 
-4. Configure o banco de dados:
+4. Setup database:
 ```bash
 pnpm migrate
 pnpm seed
 ```
 
-5. Execute o projeto:
+5. Run the project:
 ```bash
 pnpm dev
 ```
 
-## 🗄️ Scripts Disponíveis
+## 🗄️ Available Scripts
 
-- `pnpm dev` - Inicia o servidor de desenvolvimento
-- `pnpm build` - Gera build de produção
-- `pnpm start` - Inicia servidor de produção
-- `pnpm migrate` - Executa migrações do banco
-- `pnpm studio` - Abre Prisma Studio
-- `pnpm seed` - Popula banco com dados iniciais
-- `pnpm reset` - Reseta o banco de dados
+- `pnpm dev` - Start development server
+- `pnpm build` - Generate production build
+- `pnpm start` - Start production server
+- `pnpm migrate` - Run database migrations
+- `pnpm studio` - Open Prisma Studio
+- `pnpm seed` - Populate database with initial data
+- `pnpm reset` - Reset database
 
-## 🏗️ Estrutura do Projeto
+## 🏗️ Project Structure
 
 ```
 ├── app/                    # App Router (Next.js 16)
 │   ├── api/               # API Routes
-│   ├── dashboard/         # Dashboard principal com DRE
-│   ├── recebimento-mensal/# Controle de mensalidades
-│   ├── recebimento-extra/ # Recebimentos extras
-│   ├── gastos/           # Controle de gastos/despesas
-│   ├── configuracoes/    # Configurações do sistema
-│   └── admin/            # Painel administrativo
-├── components/           # Componentes reutilizáveis
-│   ├── dashboard/        # Componentes do dashboard
-│   ├── receipts/         # Formulários de recebimentos
-│   ├── expenses/         # Formulários de gastos
-│   ├── settings/         # Componentes de configuração
-│   └── ui/              # Componentes base da UI
-├── lib/                 # Utilitários e configurações
-│   ├── services/        # Serviços de dados
-│   ├── db/             # Configuração do banco
-│   └── types.ts        # Tipos TypeScript
-├── prisma/              # Schema e migrações
+│   ├── dashboard/         # Main dashboard with DRE
+│   ├── recebimento-mensal/# Tuition control
+│   ├── recebimento-extra/ # Extra receipts
+│   ├── gastos/           # Expense control
+│   ├── configuracoes/    # System settings
+│   └── admin/            # Administrative panel
+├── components/           # Reusable components
+│   ├── dashboard/        # Dashboard components
+│   ├── receipts/         # Receipt forms
+│   ├── expenses/         # Expense forms
+│   ├── settings/         # Settings components
+│   └── ui/              # Base UI components
+├── lib/                 # Utilities and configurations
+│   ├── services/        # Data services
+│   ├── db/             # Database configuration
+│   └── types.ts        # TypeScript types
+├── prisma/              # Schema and migrations
 ├── hooks/               # Custom hooks
 ├── providers/           # Context providers
-├── utils/               # Utilitários (formatação, datas)
-└── docs/               # Documentação técnica
+├── utils/               # Utilities (formatting, dates)
+└── docs/               # Technical documentation
 ```
 
-## 🔐 Sistema de Autenticação
+## 🔐 Authentication System
 
-O sistema utiliza magic links para autenticação segura:
-- **Magic Links**: Links únicos enviados por email
-- **Sessões Seguras**: Tokens com expiração automática
-- **Controle Granular**: Diferentes níveis de acesso por usuário
-- **Tokens Únicos**: Editor e Viewer tokens separados
+The system uses magic links for secure authentication:
+- **Magic Links**: Unique links sent via email
+- **Secure Sessions**: Tokens with automatic expiration
+- **Granular Control**: Different access levels per user
+- **Unique Tokens**: Separate Editor and Viewer tokens
 
-## 📊 Modelo de Dados
+## 📊 Data Model
 
-### Principais Entidades:
-- **User**: Usuários com diferentes níveis de acesso
-- **Student**: Alunos com configurações personalizadas
-- **MonthlyReceipt**: Mensalidades com controle de pagamento
-- **ExtraReceipt**: Recebimentos extras/avulsos
-- **Expense**: Gastos e despesas categorizados
-- **Income**: Rendimentos e recebimentos anteriores
-- **Config**: Configurações por usuário (ano, valores, saldos)
+### Main Entities:
+- **User**: Users with different access levels
+- **Student**: Students with custom settings
+- **MonthlyReceipt**: Tuition with payment control
+- **ExtraReceipt**: Extra/one-time receipts
+- **Expense**: Categorized expenses
+- **Income**: Income and previous receipts
+- **Config**: Per-user settings (year, values, balances)
 
 ## 🌐 Deploy
 
-Para deploy no Vercel:
+To deploy on Vercel:
 ```bash
 pnpm build:vercel
 ```
 
-## 🔧 Funcionalidades Técnicas
+## 🔧 Technical Features
 
-### Correções Implementadas
-- **Timezone**: Processamento correto de datas no timezone brasileiro
-- **Formatação**: Valores monetários no padrão pt-BR (1.234,56)
-- **Loading States**: Skeletons e estados de carregamento
-- **Validação**: Verificações de array e tratamento de erros
-- **CRUD Completo**: Operações completas em todas as entidades
+### Implemented Fixes
+- **Timezone**: Correct date processing in Brazilian timezone
+- **Formatting**: Currency values in pt-BR standard (1.234,56)
+- **Loading States**: Skeletons and loading states
+- **Validation**: Array checks and error handling
+- **Full CRUD**: Complete operations on all entities
 
-### Melhorias de UX
-- **Feedback Visual**: Confirmações e notificações em todas as ações
-- **Navegação Intuitiva**: Interface clara e organizada
-- **Responsividade**: Funciona perfeitamente em todos os dispositivos
-- **Performance**: Queries otimizadas e cache inteligente
+### UX Improvements
+- **Visual Feedback**: Confirmations and notifications on all actions
+- **Intuitive Navigation**: Clear and organized interface
+- **Responsiveness**: Works perfectly on all devices
+- **Performance**: Optimized queries and smart caching
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 **Nádia Ligia**
 - Email: nlnadialigia@gmail.com

@@ -1,0 +1,198 @@
+{
+  "common": {
+    "buttons": {
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "add": "Adicionar",
+      "back": "Voltar",
+      "confirm": "Confirmar",
+      "generating": "Gerando..."
+    },
+    "labels": {
+      "name": "Nome",
+      "value": "Valor",
+      "date": "Data",
+      "description": "Descrição",
+      "student": "Aluno",
+      "month": "Mês",
+      "year": "Ano",
+      "actions": "Ações"
+    },
+    "yes": "Sim",
+    "no": "Não",
+    "errors": {
+      "required": "Este campo é obrigatório",
+      "invalid": "Valor inválido",
+      "generic": "Ocorreu um erro"
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "students": "Alunos",
+    "monthlyReceipts": "Recebimentos Mensais",
+    "extraReceipts": "Recebimentos Extras",
+    "expenses": "Gastos",
+    "settings": "Configurações",
+    "admin": "Admin",
+    "logout": "Sair"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "incomeStatement": "Demonstração do Resultado",
+    "revenues": "Receitas",
+    "expenses": "Despesas",
+    "balance": "Saldo",
+    "initialBalance": "Saldo Inicial",
+    "totalRevenues": "Total de Receitas",
+    "totalExpenses": "Total de Despesas",
+    "netBalance": "Saldo Líquido"
+  },
+  "students": {
+    "title": "Alunos",
+    "newStudent": "Novo Aluno",
+    "editStudent": "Editar Aluno",
+    "deleteStudent": "Excluir Aluno",
+    "confirmDelete": "Tem certeza que deseja excluir este aluno?",
+    "monthlyValue": "Valor Mensal"
+  },
+  "guidance": {
+    "title": "Guia de Primeiros Passos",
+    "subtitle": "Siga estes passos para configurar seu sistema de gestão financeira",
+    "steps": {
+      "1": {
+        "title": "Configurar Sistema",
+        "description": "Configure seu ano letivo e valores mensais padrão"
+      },
+      "2": {
+        "title": "Adicionar Alunos",
+        "description": "Cadastre seus alunos com seus valores de mensalidade"
+      },
+      "3": {
+        "title": "Registrar Recebimentos",
+        "description": "Acompanhe pagamentos mensais e extras dos alunos"
+      },
+      "4": {
+        "title": "Gerenciar Gastos",
+        "description": "Registre suas despesas para controle financeiro completo"
+      }
+    },
+    "tips": {
+      "title": "Dicas",
+      "items": [
+        "Use o dashboard para ter uma visão completa das suas finanças",
+        "Gere recebimentos mensais automaticamente para todos os alunos",
+        "Mantenha controle dos pagamentos extras separados da mensalidade",
+        "Categorize gastos para melhor análise financeira"
+      ]
+    },
+    "workflow": {
+      "title": "Fluxo de Trabalho Recomendado",
+      "description": "Para melhores resultados, siga esta rotina mensal"
+    }
+  },
+  "monthlyReceipts": {
+    "title": "Recebimentos Mensais",
+    "description": "Gerencie pagamentos de mensalidades",
+    "newReceipt": "Novo Recebimento",
+    "markAsPaid": "Marcar como Pago",
+    "markAsUnpaid": "Marcar como Não Pago",
+    "paid": "Pago",
+    "unpaid": "Não Pago",
+    "paymentDate": "Data de Pagamento"
+  },
+  "extraReceipts": {
+    "title": "Recebimentos Extras",
+    "description": "Gerencie pagamentos adicionais e recebimentos únicos",
+    "cardTitle": "Recebimentos Extras",
+    "newReceipt": "Novo Recebimento Extra",
+    "editReceipt": "Editar Recebimento Extra",
+    "totalCollected": "Total Arrecadado",
+    "confirmDelete": "Tem certeza que deseja excluir este recebimento extra?",
+    "errors": {
+      "loadingReceipts": "Erro ao carregar recebimentos extras",
+      "creatingReceipt": "Erro ao criar recebimento extra",
+      "updatingReceipt": "Erro ao atualizar recebimento extra",
+      "deletingReceipt": "Erro ao excluir recebimento extra"
+    },
+    "messages": {
+      "receiptCreated": "Recebimento extra criado com sucesso",
+      "receiptUpdated": "Recebimento extra atualizado com sucesso",
+      "receiptDeleted": "Recebimento extra excluído com sucesso"
+    }
+  },
+  "expenses": {
+    "title": "Gastos",
+    "subtitle": "Gerencie suas despesas empresariais",
+    "newExpense": "Novo Gasto",
+    "editExpense": "Editar Gasto",
+    "listTitle": "Lista de Gastos",
+    "totalExpenses": "Total de Gastos",
+    "confirmDelete": "Tem certeza que deseja excluir este gasto?",
+    "category": "Categoria",
+    "paymentDate": "Data de Pagamento"
+  },
+  "settings": {
+    "title": "Configurações",
+    "description": "Configure suas preferências do sistema",
+    "generalSettings": "Configurações Gerais",
+    "academicYear": "Ano Letivo",
+    "defaultMonthlyValue": "Valor Mensal Padrão",
+    "initialBalance": "Saldo Inicial",
+    "monthlyValue": "Valor Mensal",
+    "students": "Alunos",
+    "newStudent": "Novo Aluno",
+    "name": "Nome",
+    "monthlyReceipt": "Recebimento Mensal",
+    "actions": "Ações"
+  },
+  "admin": {
+    "title": "Administração",
+    "users": "Usuários",
+    "magicLinks": "Magic Links",
+    "generateAccessLinks": "Gerar Links de Acesso",
+    "generateNewLinks": "Gerar Novos Links",
+    "user": "Usuário",
+    "selectUser": "Selecionar Usuário",
+    "generatedLinks": "Links Gerados",
+    "editorLink": "Link Editor",
+    "viewerLink": "Link Visualizador",
+    "copyEditorLink": "Copiar Link Editor",
+    "copyViewerLink": "Copiar Link Visualizador",
+    "usersWithActiveLinks": "Usuários com Links Ativos",
+    "activeLinksDescription": "Usuários que possuem magic links ativos para acesso ao sistema",
+    "copyEditor": "Copiar Editor",
+    "copyViewer": "Copiar Visualizador",
+    "noLinkGenerated": "Nenhum link gerado",
+    "noUsersWithActiveLinks": "Nenhum usuário com links ativos",
+    "magicLinksGenerated": "Magic links gerados com sucesso",
+    "errorGeneratingMagicLinks": "Erro ao gerar magic links",
+    "linkCopied": "Link copiado para a área de transferência",
+    "table": {
+      "name": "Nome",
+      "email": "Email",
+      "role": "Função",
+      "createdAt": "Criado em",
+      "actions": "Ações"
+    },
+    "createUser": "Criar Usuário",
+    "editUser": "Editar Usuário",
+    "messages": {
+      "userCreated": "Usuário criado com sucesso",
+      "userUpdated": "Usuário atualizado com sucesso",
+      "userDeleted": "Usuário excluído com sucesso"
+    }
+  },
+  "auth": {
+    "login": "Entrar",
+    "logout": "Sair",
+    "email": "Email",
+    "password": "Senha",
+    "magicLink": "Magic Link",
+    "sendMagicLink": "Enviar Magic Link",
+    "checkEmail": "Verifique seu email para o magic link",
+    "invalidLink": "Link inválido ou expirado",
+    "accessDenied": "Acesso negado"
+  }
+}

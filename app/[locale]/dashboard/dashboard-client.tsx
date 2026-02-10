@@ -7,10 +7,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Config, Expense, ExtraReceipt, MonthlyReceipt, Student } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { Plus, TrendingUp } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useState } from "react";
 import { usePermissions } from "@/hooks/use-permissions";
 import { getLocalMonth } from "@/utils/date";
+import { useTranslations } from "next-intl";
 
 interface DashboardData {
   students: Student[];
@@ -27,6 +28,7 @@ interface DashboardClientProps {
 }
 
 export function DashboardClient({ initialData }: DashboardClientProps) {
+  const t = useTranslations();
   const { canEdit } = usePermissions();
   const [previousIncomeOpen, setPreviousIncomeOpen] = useState(false);
   const [rendimentosOpen, setRendimentosOpen] = useState(false);
@@ -51,7 +53,6 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
     initialData: initialData.expenses || [],
   });
 
-  // Preparar dados para a tabela DRE
   const dreData = {
     config: {
       monthlyValue: initialData.config?.monthlyValue || 0,
@@ -73,22 +74,20 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
     })) : [],
   };
 
-  // Calcular saldo líquido igual ao da tabela DRE (saldo de dezembro)
   const totalReceitas = dreData.monthlyReceipts.reduce((sum, r) => sum + r.value, 0) +
     dreData.extraReceipts.reduce((sum, r) => sum + r.value, 0) +
     incomes.reduce((sum: number, i: any) => sum + i.value, 0);
 
   const totalDespesas = dreData.expenses.reduce((sum, e) => sum + e.value, 0);
-
   const saldoLiquidoTabela = dreData.config.previousBalance + totalReceitas - totalDespesas;
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Resumo Financeiro {year}</h1>
+          <h1 className="text-3xl font-bold">{t('dashboard.title')} {year}</h1>
           <p className="text-muted-foreground">
-            Resumo de receitas, despesas e rendimentos
+            {t('dashboard.dre.title')}
           </p>
         </div>
         <div className="flex gap-2">
@@ -96,22 +95,21 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
             <>
               <Button onClick={() => setPreviousIncomeOpen(true)} variant="outline">
                 <Plus className="size-4 mr-2" />
-                Recebidos Ano Anterior
+                {t('dashboard.dre.previousReceipts')}
               </Button>
               <Button onClick={() => setRendimentosOpen(true)} variant="outline">
                 <TrendingUp className="size-4 mr-2" />
-                Rendimentos
+                {t('dashboard.dre.income')}
               </Button>
             </>
           )}
         </div>
       </div>
 
-      {/* Cards de Resumo */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Saldo Inicial</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.cards.initialBalance')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-600">
@@ -121,7 +119,7 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Total Receitas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.cards.totalRevenues')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
@@ -131,7 +129,7 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Total Despesas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.cards.totalExpenses')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">
@@ -141,7 +139,7 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Saldo Líquido</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.cards.netBalance')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className={`text-2xl font-bold ${saldoLiquidoTabela >= 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -151,12 +149,11 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
         </Card>
       </div>
 
-      {/* Tabela DRE */}
       <Card>
         <CardHeader>
-          <CardTitle>Demonstração do Resultado do Exercício</CardTitle>
+          <CardTitle>{t('dashboard.dre.title')}</CardTitle>
           <CardDescription>
-            Receitas e despesas detalhadas por mês
+            {t('dashboard.dre.revenues')} e {t('dashboard.dre.expenses').toLowerCase()}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -164,39 +161,37 @@ export function DashboardClient({ initialData }: DashboardClientProps) {
         </CardContent>
       </Card>
 
-      {/* Links Rápidos */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Link href="/recebimento-mensal" className="block">
+        <Link href="/monthly-receipts" className="block">
           <Card className="hover:bg-accent transition-colors cursor-pointer">
             <CardContent className="p-4 text-center">
-              <div className="text-sm font-medium">Recebimento Mensal</div>
+              <div className="text-sm font-medium">{t('nav.monthlyReceipts')}</div>
             </CardContent>
           </Card>
         </Link>
-        <Link href="/recebimento-extra" className="block">
+        <Link href="/extra-receipts" className="block">
           <Card className="hover:bg-accent transition-colors cursor-pointer">
             <CardContent className="p-4 text-center">
-              <div className="text-sm font-medium">Recebimento Extra</div>
+              <div className="text-sm font-medium">{t('nav.extraReceipts')}</div>
             </CardContent>
           </Card>
         </Link>
-        <Link href="/gastos" className="block">
+        <Link href="/expenses" className="block">
           <Card className="hover:bg-accent transition-colors cursor-pointer">
             <CardContent className="p-4 text-center">
-              <div className="text-sm font-medium">Gastos</div>
+              <div className="text-sm font-medium">{t('nav.expenses')}</div>
             </CardContent>
           </Card>
         </Link>
-        <Link href="/configuracoes" className="block">
+        <Link href="/settings" className="block">
           <Card className="hover:bg-accent transition-colors cursor-pointer">
             <CardContent className="p-4 text-center">
-              <div className="text-sm font-medium">Configurações</div>
+              <div className="text-sm font-medium">{t('nav.settings')}</div>
             </CardContent>
           </Card>
         </Link>
       </div>
 
-      {/* Modais */}
       {canEdit && (
         <IncomeModals
           userId={initialData.userId}

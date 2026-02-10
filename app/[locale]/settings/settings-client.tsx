@@ -29,6 +29,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Pencil, Plus, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface SettingsData {
   students: Student[];
@@ -40,6 +41,7 @@ interface SettingsClientProps {
 }
 
 export function SettingsClient({ initialData }: SettingsClientProps) {
+  const t = useTranslations();
   const { canEdit } = usePermissions();
   const [selectedStudent, setSelectedStudent] = useState<
     FullStudent | undefined
@@ -80,7 +82,7 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
       return response.json();
     },
     onSuccess: () => {
-      toast.success("Configuração salva com sucesso");
+      toast.success(t("settings.configSavedSuccess"));
       queryClient.invalidateQueries({ queryKey: ["config"] });
       setIsEditingConfig(false);
       setYear("");
@@ -88,7 +90,7 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
       setPreviousBalance("");
     },
     onError: () => {
-      toast.error("Erro ao salvar configuração");
+      toast.error(t("settings.configSaveError"));
     },
   });
 
@@ -99,10 +101,10 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["students"] });
-      toast.success("Aluno deletado com sucesso");
+      toast.success(t("settings.studentDeletedSuccess"));
     },
     onError: () => {
-      toast.error("Erro ao deletar aluno");
+      toast.error(t("settings.studentDeleteError"));
     },
   });
 
@@ -156,9 +158,9 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Configurações</h1>
+        <h1 className="text-3xl font-bold">{t("settings.title")}</h1>
         <p className="text-muted-foreground">
-          Configure o ano letivo, valor mensal, saldo inicial e gerencie os alunos
+          {t("settings.description")}
         </p>
       </div>
 
@@ -167,15 +169,15 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Configurações Gerais</CardTitle>
+              <CardTitle>{t("settings.generalSettings")}</CardTitle>
               <CardDescription>
-                Configure o ano letivo, valor da mensalidade e saldo inicial
+                {t("settings.generalSettingsDescription")}
               </CardDescription>
             </div>
             {!isEditingConfig && config && canEdit && (
               <Button onClick={handleEditConfig} variant="outline">
                 <Pencil className="size-4 mr-2" />
-                Editar
+                {t("common.buttons.edit")}
               </Button>
             )}
           </CardHeader>
@@ -201,17 +203,17 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
             ) : !config && !isEditingConfig ? (
               <div className="text-center py-8">
                 <p className="text-muted-foreground mb-4">
-                  Nenhuma configuração encontrada
+                  {t("settings.noConfigurationFound")}
                 </p>
                 <Button onClick={() => setIsEditingConfig(true)}>
                   <Plus className="size-4 mr-2" />
-                  Adicionar Configuração
+                  {t("settings.addConfiguration")}
                 </Button>
               </div>
             ) : isEditingConfig ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <Label htmlFor="year">Ano Letivo</Label>
+                  <Label htmlFor="year">{t("settings.academicYear")}</Label>
                   <Input
                     id="year"
                     type="number"
@@ -221,7 +223,7 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="monthlyValue">Valor Mensal (R$)</Label>
+                  <Label htmlFor="monthlyValue">{t("settings.monthlyValue")}</Label>
                   <Input
                     id="monthlyValue"
                     type="number"
@@ -232,7 +234,7 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="previousBalance">Saldo Inicial (R$)</Label>
+                  <Label htmlFor="previousBalance">{t("settings.initialBalance")}</Label>
                   <Input
                     id="previousBalance"
                     type="number"
@@ -245,25 +247,25 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
                 <div className="md:col-span-3 flex gap-2">
                   <Button onClick={handleSaveConfig} className="flex-1">
                     <Save className="size-4 mr-2" />
-                    Salvar
+                    {t("common.buttons.save")}
                   </Button>
                   <Button onClick={handleCancelEdit} variant="outline" className="flex-1">
-                    Cancelar
+                    {t("common.buttons.cancel")}
                   </Button>
                 </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <Label>Ano Letivo</Label>
+                  <Label>{t("settings.academicYear")}</Label>
                   <p className="text-2xl font-semibold">{config.year}</p>
                 </div>
                 <div>
-                  <Label>Valor Mensal</Label>
+                  <Label>{t("settings.monthlyValue")}</Label>
                   <p className="text-2xl font-semibold">R$ {config.monthlyValue?.toFixed(2).replace(".", ",")}</p>
                 </div>
                 <div>
-                  <Label>Saldo Inicial</Label>
+                  <Label>{t("settings.initialBalance")}</Label>
                   <p className="text-2xl font-semibold">R$ {config.previousBalance?.toFixed(2).replace(".", ",")}</p>
                 </div>
               </div>
@@ -276,13 +278,13 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>Alunos</CardTitle>
-            <CardDescription>Gerencie os alunos do sistema</CardDescription>
+            <CardTitle>{t("settings.students")}</CardTitle>
+            <CardDescription>{t("settings.studentsDescription")}</CardDescription>
           </div>
           {canEdit && (
             <Button onClick={() => setStudentDialogOpen(true)}>
               <Plus className="size-4 mr-2" />
-              Novo Aluno
+              {t("settings.newStudent")}
             </Button>
           )}
         </CardHeader>
@@ -302,9 +304,9 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Nome</TableHead>
-                  <TableHead>Recebimento Mensal</TableHead>
-                  {canEdit && <TableHead>Ações</TableHead>}
+                  <TableHead>{t("settings.name")}</TableHead>
+                  <TableHead>{t("settings.monthlyReceipt")}</TableHead>
+                  {canEdit && <TableHead>{t("settings.actions")}</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -320,7 +322,7 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
                           variant={"secondary"}
                           className={generateBadge(student.isMonthlyReceipt)}
                         >
-                          {student.isMonthlyReceipt ? "Sim" : "Não"}
+                          {student.isMonthlyReceipt ? t("common.yes") : t("common.no")}
                         </Badge>
                       </TableCell>
                       {canEdit && (
@@ -351,7 +353,7 @@ export function SettingsClient({ initialData }: SettingsClientProps) {
               ) : (
                 <TableRow>
                   <TableCell colSpan={canEdit ? 3 : 2} className="text-center text-muted-foreground">
-                    Nenhum aluno cadastrado
+                    {t("settings.noStudentsRegistered")}
                   </TableCell>
                 </TableRow>
               )}

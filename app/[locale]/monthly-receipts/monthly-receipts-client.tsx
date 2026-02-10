@@ -39,6 +39,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Download, FileText, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface MonthlyReceiptsData {
   students: FullStudent[];
@@ -53,6 +54,7 @@ interface MonthlyReceiptsClientProps {
 export function MonthlyReceiptsClient({
   initialData,
 }: MonthlyReceiptsClientProps) {
+  const t = useTranslations();
   const { canEdit } = usePermissions();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [students, setStudents] = useState(initialData.students);
@@ -139,7 +141,7 @@ export function MonthlyReceiptsClient({
           }),
         });
         if (!response.ok) {
-          throw new Error('Erro ao salvar recebimento');
+          throw new Error(t('common.errors.saveError'));
         }
         results.push(await response.json());
       }
@@ -163,7 +165,7 @@ export function MonthlyReceiptsClient({
       setPendingReceipts([]);
       setFormData({ studentId: "", month: "", value: "", paymentDate: "" });
       setIsModalOpen(false);
-      toast.success(`${newReceipts.length} recebimento(s) salvo(s) com sucesso!`);
+      toast.success(t('monthlyReceipts.receiptsSaved', { count: newReceipts.length }));
     },
   });
 
@@ -178,7 +180,7 @@ export function MonthlyReceiptsClient({
         }),
       });
       if (!response.ok) {
-        throw new Error('Erro ao atualizar recebimento');
+        throw new Error(t('common.errors.updateError'));
       }
       return response.json();
     },
@@ -193,14 +195,14 @@ export function MonthlyReceiptsClient({
       );
       setEditModalOpen(false);
       setEditingReceipt(null);
-      toast.success('Recebimento atualizado com sucesso!');
+      toast.success(t('monthlyReceipts.receiptUpdated'));
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (pendingReceipts.length === 0) {
-      toast.error('Adicione pelo menos um recebimento antes de salvar');
+      toast.error(t('monthlyReceipts.addAtLeastOne'));
       return;
     }
     addReceiptMutation.mutate(pendingReceipts);
@@ -208,7 +210,7 @@ export function MonthlyReceiptsClient({
 
   const handleAddMore = () => {
     if (!formData.studentId || !formData.month || !formData.value || !formData.paymentDate) {
-      toast.error('Preencha todos os campos');
+      toast.error(t('common.errors.fillAllFields'));
       return;
     }
 
@@ -221,7 +223,7 @@ export function MonthlyReceiptsClient({
 
     setPendingReceipts(prev => [...prev, newReceipt]);
     setFormData({ studentId: "", month: "", value: "", paymentDate: "" });
-    toast.success('Recebimento adicionado à lista');
+    toast.success(t('monthlyReceipts.receiptAddedToList'));
   };
 
   const handleEditReceipt = (receipt: any, student: any) => {
@@ -254,14 +256,14 @@ export function MonthlyReceiptsClient({
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Recebimento Mensal</h1>
+          <h1 className="text-3xl font-bold">{t('monthlyReceipts.title')}</h1>
           <p className="text-muted-foreground">
-            Controle de mensalidades dos alunos
+            {t('monthlyReceipts.description')}
           </p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 font-bold">
-            <p>Ano:</p>
+            <p>{t('common.year')}:</p>
             <p>{initialData.config?.year}</p>
           </div>
           <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -269,18 +271,18 @@ export function MonthlyReceiptsClient({
               <DialogTrigger asChild>
                 <Button>
                   <Plus className="w-4 h-4 mr-2" />
-                  Adicionar Recebimento
+                  {t('monthlyReceipts.addReceipt')}
                 </Button>
               </DialogTrigger>
             )}
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Adicionar Recebimento</DialogTitle>
+                <DialogTitle>{t('monthlyReceipts.addReceipt')}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {pendingReceipts.length > 0 && (
                   <div className="bg-muted p-3 rounded space-y-3">
-                    <h4 className="font-medium">Recebimentos a salvar:</h4>
+                    <h4 className="font-medium">{t('monthlyReceipts.receiptsToSave')}:</h4>
                     <ul className="text-sm space-y-2">
                       {pendingReceipts.map((receipt, index) => {
                         const student = monthlyStudents.find(s => s.id === receipt.studentId);
@@ -290,7 +292,7 @@ export function MonthlyReceiptsClient({
                             <div className="flex flex-col">
                               <span className="font-medium">{student?.name} - {monthName}</span>
                               <span className="text-xs text-muted-foreground">
-                                Data: {new Date(receipt.paymentDate).toLocaleDateString('pt-BR')}
+                                {t('common.date')}: {new Date(receipt.paymentDate).toLocaleDateString('pt-BR')}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
@@ -316,12 +318,12 @@ export function MonthlyReceiptsClient({
                       disabled={addReceiptMutation.isPending}
                       className="w-full"
                     >
-                      {addReceiptMutation.isPending ? "Salvando..." : `Salvar ${pendingReceipts.length} Recebimento(s)`}
+                      {addReceiptMutation.isPending ? t('common.saving') : t('monthlyReceipts.saveReceipts', { count: pendingReceipts.length })}
                     </Button>
                   </div>
                 )}
                 <div>
-                  <Label htmlFor="student" className="pb-2">Aluno</Label>
+                  <Label htmlFor="student" className="pb-2">{t('common.student')}</Label>
                   <Select
                     value={formData.studentId}
                     onValueChange={(value) =>
@@ -329,7 +331,7 @@ export function MonthlyReceiptsClient({
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione o aluno" />
+                      <SelectValue placeholder={t('common.selectStudent')} />
                     </SelectTrigger>
                     <SelectContent>
                       {monthlyStudents.map((student) => (
@@ -341,7 +343,7 @@ export function MonthlyReceiptsClient({
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="month" className="pb-2">Competência</Label>
+                  <Label htmlFor="month" className="pb-2">{t('common.competence')}</Label>
                   <Select
                     value={formData.month}
                     onValueChange={(value) =>
@@ -349,7 +351,7 @@ export function MonthlyReceiptsClient({
                     }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione o mês" />
+                      <SelectValue placeholder={t('common.selectMonth')} />
                     </SelectTrigger>
                     <SelectContent>
                       {months.map((month, index) => (
@@ -361,7 +363,7 @@ export function MonthlyReceiptsClient({
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="value" className="pb-2">Valor</Label>
+                  <Label htmlFor="value" className="pb-2">{t('common.value')}</Label>
                   <Input
                     id="value"
                     type="number"
@@ -374,7 +376,7 @@ export function MonthlyReceiptsClient({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="paymentDate" className="pb-2">Data de Recebimento</Label>
+                  <Label htmlFor="paymentDate" className="pb-2">{t('common.paymentDate')}</Label>
                   <Input
                     id="paymentDate"
                     type="date"
@@ -390,7 +392,7 @@ export function MonthlyReceiptsClient({
                     onClick={handleAddMore}
                     className="flex-1"
                   >
-                    Adicionar à Lista
+                    {t('monthlyReceipts.addToList')}
                   </Button>
                 </div>
               </form>
@@ -403,20 +405,20 @@ export function MonthlyReceiptsClient({
       <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar Recebimento</DialogTitle>
+            <DialogTitle>{t('monthlyReceipts.editReceipt')}</DialogTitle>
           </DialogHeader>
           {editingReceipt && (
             <form onSubmit={handleUpdateReceipt} className="space-y-4">
               <div>
-                <Label>Aluno</Label>
+                <Label>{t('common.student')}</Label>
                 <Input value={editingReceipt.studentName} disabled />
               </div>
               <div>
-                <Label>Mês</Label>
+                <Label>{t('common.month')}</Label>
                 <Input value={months[editingReceipt.month - 1]} disabled />
               </div>
               <div>
-                <Label htmlFor="editValue">Valor</Label>
+                <Label htmlFor="editValue">{t('common.value')}</Label>
                 <Input
                   id="editValue"
                   type="number"
@@ -429,7 +431,7 @@ export function MonthlyReceiptsClient({
                 />
               </div>
               <div>
-                <Label htmlFor="editPaymentDate">Data de Recebimento</Label>
+                <Label htmlFor="editPaymentDate">{t('common.paymentDate')}</Label>
                 <Input
                   id="editPaymentDate"
                   type="date"
@@ -447,14 +449,14 @@ export function MonthlyReceiptsClient({
                   onClick={() => setEditModalOpen(false)}
                   className="flex-1"
                 >
-                  Cancelar
+                  {t('common.buttons.cancel')}
                 </Button>
                 <Button
                   type="submit"
                   disabled={updateReceiptMutation.isPending}
                   className="flex-1"
                 >
-                  {updateReceiptMutation.isPending ? "Salvando..." : "Salvar"}
+                  {updateReceiptMutation.isPending ? t('common.saving') : t('common.buttons.save')}
                 </Button>
               </div>
             </form>
@@ -468,31 +470,31 @@ export function MonthlyReceiptsClient({
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <FileText className="w-5 h-5" />
-              Relatório - {selectedStudentReport?.name}
+              {t('monthlyReceipts.report')} - {selectedStudentReport?.name}
             </DialogTitle>
           </DialogHeader>
           {selectedStudentReport && (
             <div className="space-y-4">
               <div className="bg-muted p-4 rounded-lg">
-                <h3 className="font-semibold mb-2">Informações do Aluno</h3>
+                <h3 className="font-semibold mb-2">{t('monthlyReceipts.studentInfo')}</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="font-medium">Nome:</span> {selectedStudentReport.name}
+                    <span className="font-medium">{t('common.name')}:</span> {selectedStudentReport.name}
                   </div>
                   <div>
-                    <span className="font-medium">Valor Mensal:</span> R$ {initialData.config?.monthlyValue?.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0,00'}
+                    <span className="font-medium">{t('common.monthlyValue')}:</span> R$ {initialData.config?.monthlyValue?.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0,00'}
                   </div>
                   <div>
-                    <span className="font-medium">Períodos:</span> {selectedStudentReport.monthlyPeriods?.length || 12} meses
+                    <span className="font-medium">{t('common.periods')}:</span> {selectedStudentReport.monthlyPeriods?.length || 12} {t('common.months')}
                   </div>
                   <div>
-                    <span className="font-medium">Ano:</span> {initialData.config?.year}
+                    <span className="font-medium">{t('common.year')}:</span> {initialData.config?.year}
                   </div>
                 </div>
               </div>
 
               <div className="bg-muted p-4 rounded-lg">
-                <h3 className="font-semibold mb-2">Pagamentos Realizados</h3>
+                <h3 className="font-semibold mb-2">{t('monthlyReceipts.paymentsCompleted')}</h3>
                 {(() => {
                   const receipts = selectedStudentReport.monthlyReceipts?.filter((r: any) => r.year === initialData.config?.year) || [];
                   const paidReceipts = receipts.filter((r: any) => r.paid);
@@ -514,14 +516,14 @@ export function MonthlyReceiptsClient({
                       ))}
                       {paidReceipts.length > 0 && (
                         <div className="flex justify-between items-center text-sm bg-green-50 p-2 rounded font-semibold border-t">
-                          <span>TOTAL PAGO</span>
+                          <span>{t('monthlyReceipts.totalPaid')}</span>
                           <span>R$ {totalPaid.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                           <span></span>
                         </div>
                       )}
                       {paidReceipts.length === 0 && (
                         <div className="text-center text-muted-foreground py-4">
-                          Nenhum pagamento realizado
+                          {t('monthlyReceipts.noPayments')}
                         </div>
                       )}
                     </div>
@@ -535,7 +537,7 @@ export function MonthlyReceiptsClient({
                   onClick={() => setReportModalOpen(false)}
                   className="flex-1"
                 >
-                  Fechar
+                  {t('common.buttons.close')}
                 </Button>
                 <Button
                   onClick={() => {
@@ -548,7 +550,7 @@ export function MonthlyReceiptsClient({
                   className="flex-1"
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Imprimir PDF
+                  {t('common.buttons.printPDF')}
                 </Button>
               </div>
             </div>
@@ -560,7 +562,7 @@ export function MonthlyReceiptsClient({
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Previsto
+              {t('monthlyReceipts.totalExpected')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -572,7 +574,7 @@ export function MonthlyReceiptsClient({
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Arrecadado
+              {t('monthlyReceipts.totalCollected')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -585,7 +587,7 @@ export function MonthlyReceiptsClient({
 
       <Card>
         <CardHeader>
-          <CardTitle>Recebimentos de {initialData.config?.year}</CardTitle>
+          <CardTitle>{t('monthlyReceipts.receiptsOf')} {initialData.config?.year}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto min-h-96">
@@ -593,14 +595,14 @@ export function MonthlyReceiptsClient({
               <TableHeader>
                 <TableRow>
                   <TableHead className="sticky left-0 bg-background">
-                    Aluno
+                    {t('common.student')}
                   </TableHead>
                   {months.map((month) => (
                     <TableHead key={month} className="text-center min-w-24">
                       {month.substring(0, 3)}
                     </TableHead>
                   ))}
-                  <TableHead className="text-right">Total</TableHead>
+                  <TableHead className="text-right">{t('common.total')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -645,7 +647,7 @@ export function MonthlyReceiptsClient({
                 ))}
                 <TableRow className="border-t-2 bg-muted/50">
                   <TableCell className="sticky left-0 bg-muted/50 font-bold">
-                    TOTAL
+                    {t('common.total')}
                   </TableCell>
                   {months.map((_, index) => {
                     const monthNumber = index + 1;

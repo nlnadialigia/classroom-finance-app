@@ -19,6 +19,7 @@ import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface AdminClientProps {
   initialUsers: UserList[];
@@ -31,6 +32,7 @@ const initialNewUser = {
 };
 
 export function AdminClient({ initialUsers }: AdminClientProps) {
+  const t = useTranslations();
   const [newUser, setNewUser] = useState(initialNewUser);
   const [editUser, setEditUser] = useState<User | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -71,14 +73,14 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
       return response.json();
     },
     onSuccess: () => {
-      toast.success("Usuário criado com sucesso!");
+      toast.success(t('admin.messages.userCreated'));
       queryClient.invalidateQueries({ queryKey: ["users"] });
       queryClient.invalidateQueries({ queryKey: ["magic-links"] });
       setNewUser(initialNewUser);
       setIsDialogOpen(false);
     },
     onError: (error) => {
-      toast.error("Erro ao criar usuário!");
+      toast.error(t('admin.messages.userCreateError'));
     },
   });
 
@@ -98,13 +100,13 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
       return response.json();
     },
     onSuccess: () => {
-      toast.success("Usuário atualizado com sucesso!");
+      toast.success(t('admin.messages.userUpdated'));
       queryClient.invalidateQueries({ queryKey: ["users"] });
       setIsEditDialogOpen(false);
       setEditUser(null);
     },
     onError: (error) => {
-      toast.error("Erro ao atualizar usuário!");
+      toast.error(t('admin.messages.userUpdateError'));
     },
   });
 
@@ -118,12 +120,12 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
       return response.json();
     },
     onSuccess: () => {
-      toast.success("Links mágicos gerados com sucesso!");
+      toast.success(t('admin.messages.linksGenerated'));
       queryClient.invalidateQueries({ queryKey: ["users"] });
       queryClient.invalidateQueries({ queryKey: ["magic-links"] });
     },
     onError: () => {
-      toast.error("Erro ao gerar links mágicos");
+      toast.error(t('admin.messages.linksGenerateError'));
     },
   });
 
@@ -135,11 +137,11 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
       return response.json();
     },
     onSuccess: () => {
-      toast.success("Usuário excluído com sucesso!");
+      toast.success(t('admin.messages.userDeleted'));
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
     onError: (error) => {
-      toast.error("Erro ao excluir usuário!");
+      toast.error(t('admin.messages.userDeleteError'));
     },
   });
 
@@ -162,7 +164,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
 
   const copyToClipboard = (link: string) => {
     navigator.clipboard.writeText(link);
-    toast.success("Link copiado!");
+    toast.success(t('admin.messages.linkCopied'));
   };
 
   const handleGenerateLinks = (username: string) => {
@@ -202,7 +204,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
             size="sm"
             onClick={() => copyToClipboard(userWithLinks.editorLink)}
           >
-            Editor
+            {t('admin.roles.editor')}
           </Button>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>
@@ -221,7 +223,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
             size="sm"
             onClick={() => copyToClipboard(userWithLinks.viewerLink)}
           >
-            Visualizador
+            {t('admin.roles.viewer')}
           </Button>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>
@@ -238,7 +240,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
         size="sm"
         onClick={() => handleEditUser(params.data)}
       >
-        Editar
+        {t('common.buttons.edit')}
       </Button>
       <Button
         className="bg-white text-blue-600 border-blue-600 hover:bg-blue-100 hover:text-blue-600"
@@ -247,7 +249,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
         onClick={() => handleGenerateLinks(params.data.username)}
         disabled={generateLinksMutation.isPending}
       >
-        Gerar Links
+        {t('admin.generateLinks')}
       </Button>
       {params.data.role !== "ADMIN" && (
         <Button
@@ -257,7 +259,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
           onClick={() => handleDeleteUser(params.data.id)}
           disabled={deleteUserMutation.isPending}
         >
-          Excluir
+          {t('common.buttons.delete')}
         </Button>
       )}
     </div>
@@ -265,16 +267,16 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
 
   const columnDefs: ColDef[] = useMemo(
     () => [
-      { field: "username", headerName: "Username", flex: 1 },
+      { field: "username", headerName: t('admin.table.username'), flex: 1 },
       {
         field: "role",
-        headerName: "Função",
+        headerName: t('admin.table.role'),
         flex: 1,
         cellRenderer: roleRenderer,
       },
-      { headerName: "Link Editor", flex: 1, cellRenderer: linksRenderer },
-      { headerName: "Link Visualizador", flex: 1, cellRenderer: viewerLinksRenderer },
-      { headerName: "Ações", flex: 1, cellRenderer: actionsRenderer },
+      { headerName: t('admin.table.editorLink'), flex: 1, cellRenderer: linksRenderer },
+      { headerName: t('admin.table.viewerLink'), flex: 1, cellRenderer: viewerLinksRenderer },
+      { headerName: t('admin.table.actions'), flex: 1, cellRenderer: actionsRenderer },
     ],
     [deleteUserMutation.isPending, generateLinksMutation.isPending, usersWithLinks],
   );
@@ -283,21 +285,21 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
     <>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Usuários do Sistema</CardTitle>
+          <CardTitle>{t('admin.title')}</CardTitle>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button>Novo Usuário</Button>
+              <Button>{t('admin.addUser')}</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Criar Novo Usuário</DialogTitle>
+                <DialogTitle>{t('admin.createUser.title')}</DialogTitle>
                 <DialogDescription>
-                  Adicione um novo usuário ao sistema
+                  {t('admin.createUser.description')}
                 </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleCreateUser} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nome</Label>
+                  <Label htmlFor="name">{t('admin.createUser.nameLabel')}</Label>
                   <Input
                     id="name"
                     value={newUser.username}
@@ -308,7 +310,7 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Use a página "Links Mágicos" para gerar links de acesso para este usuário.
+                  {t('admin.createUser.magicLinksNote')}
                 </p>
                 <Button
                   type="submit"
@@ -316,8 +318,8 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
                   disabled={createUserMutation.isPending}
                 >
                   {createUserMutation.isPending
-                    ? "Criando..."
-                    : "Criar Usuário"}
+                    ? t('admin.createUser.creating')
+                    : t('admin.createUser.create')}
                 </Button>
               </form>
             </DialogContent>
@@ -341,15 +343,15 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar Usuário</DialogTitle>
+            <DialogTitle>{t('admin.editUser.title')}</DialogTitle>
             <DialogDescription>
-              Edite as informações do usuário
+              {t('admin.editUser.description')}
             </DialogDescription>
           </DialogHeader>
           {editUser && (
             <form onSubmit={handleUpdateUser} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-name">username</Label>
+                <Label htmlFor="edit-name">{t('admin.editUser.usernameLabel')}</Label>
                 <Input
                   id="edit-name"
                   value={editUser.username}
@@ -365,8 +367,8 @@ export function AdminClient({ initialUsers }: AdminClientProps) {
                 disabled={updateUserMutation.isPending}
               >
                 {updateUserMutation.isPending
-                  ? "Salvando..."
-                  : "Salvar Alterações"}
+                  ? t('common.buttons.saving')
+                  : t('common.buttons.saveChanges')}
               </Button>
             </form>
           )}

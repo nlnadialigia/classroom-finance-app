@@ -9,8 +9,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Copy, Link } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export function MagicLinksClient() {
+  const t = useTranslations();
   const [username, setUsername] = useState("");
   const [generatedLinks, setGeneratedLinks] = useState<{ editorLink: string, viewerLink: string; } | null>(null);
   const queryClient = useQueryClient();
@@ -42,19 +44,19 @@ export function MagicLinksClient() {
     },
     onSuccess: (data) => {
       setGeneratedLinks({ editorLink: data.editorLink, viewerLink: data.viewerLink });
-      toast.success("Links mágicos gerados com sucesso!");
+      toast.success(t('admin.magicLinksGenerated'));
       setUsername("");
       queryClient.invalidateQueries({ queryKey: ["magic-links"] });
     },
     onError: () => {
-      toast.error("Erro ao gerar links mágicos");
+      toast.error(t('admin.errorGeneratingMagicLinks'));
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!username) {
-      toast.error("Selecione um usuário");
+      toast.error(t('admin.selectUser'));
       return;
     }
     generateLinkMutation.mutate({ username });
@@ -62,34 +64,33 @@ export function MagicLinksClient() {
 
   const copyToClipboard = (link: string) => {
     navigator.clipboard.writeText(link);
-    toast.success("Link copiado para a área de transferência!");
+    toast.success(t('admin.linkCopied'));
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Links Mágicos</h1>
+        <h1 className="text-3xl font-bold">{t('admin.magicLinks')}</h1>
         <p className="text-muted-foreground">
-          Gere links de acesso para editores e visualizadores
+          {t('admin.generateAccessLinks')}
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Gerar Novos Links</CardTitle>
+            <CardTitle>{t('admin.generateNewLinks')}</CardTitle>
             <CardDescription>
-              Crie links mágicos permanentes (editor e visualizador) para acesso direto ao sistema.
-              Gerar novos links para o mesmo usuário invalidará os anteriores.
+              {t('admin.generateNewLinksDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="username" className="mb-2">Usuário</Label>
+                <Label htmlFor="username" className="mb-2">{t('admin.user')}</Label>
                 <Select value={username} onValueChange={setUsername}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione um usuário" />
+                    <SelectValue placeholder={t('admin.selectUser')} />
                   </SelectTrigger>
                   <SelectContent>
                     {allUsers.filter((user: any) => user.role !== "ADMIN").map((user: any) => (
@@ -106,7 +107,7 @@ export function MagicLinksClient() {
                 disabled={generateLinkMutation.isPending}
               >
                 <Link className="size-4 mr-2" />
-                {generateLinkMutation.isPending ? "Gerando..." : "Gerar Links Mágicos"}
+                {generateLinkMutation.isPending ? t('common.buttons.generating') : t('admin.generateMagicLinks')}
               </Button>
             </form>
           </CardContent>
@@ -115,31 +116,31 @@ export function MagicLinksClient() {
         {generatedLinks && (
           <Card>
             <CardHeader>
-              <CardTitle>Links Gerados</CardTitle>
+              <CardTitle>{t('admin.generatedLinks')}</CardTitle>
               <CardDescription>
-                Compartilhe estes links com o usuário
+                {t('admin.shareLinksWithUser')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <Label className="text-sm font-medium">Link Editor (Pode modificar)</Label>
+                  <Label className="text-sm font-medium">{t('admin.editorLink')}</Label>
                   <div className="p-3 bg-muted rounded-md break-all text-sm mb-2">
                     {generatedLinks.editorLink}
                   </div>
                   <Button onClick={() => copyToClipboard(generatedLinks.editorLink)} className="w-full" size="sm">
                     <Copy className="size-4 mr-2" />
-                    Copiar Link Editor
+                    {t('admin.copyEditorLink')}
                   </Button>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">Link Visualizador (Apenas leitura)</Label>
+                  <Label className="text-sm font-medium">{t('admin.viewerLink')}</Label>
                   <div className="p-3 bg-muted rounded-md break-all text-sm mb-2">
                     {generatedLinks.viewerLink}
                   </div>
                   <Button onClick={() => copyToClipboard(generatedLinks.viewerLink)} className="w-full" size="sm" variant="outline">
                     <Copy className="size-4 mr-2" />
-                    Copiar Link Visualizador
+                    {t('admin.copyViewerLink')}
                   </Button>
                 </div>
               </div>
@@ -151,18 +152,18 @@ export function MagicLinksClient() {
       {/* Lista de Usuários Existentes */}
       <Card>
         <CardHeader>
-          <CardTitle>Usuários com Links Ativos</CardTitle>
+          <CardTitle>{t('admin.usersWithActiveLinks')}</CardTitle>
           <CardDescription>
-            Links mágicos já gerados e ativos no sistema
+            {t('admin.activeLinksDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Usuário</TableHead>
-                <TableHead>Link Editor</TableHead>
-                <TableHead>Link Visualizador</TableHead>
+                <TableHead>{t('admin.user')}</TableHead>
+                <TableHead>{t('admin.editorLink')}</TableHead>
+                <TableHead>{t('admin.viewerLink')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -177,11 +178,11 @@ export function MagicLinksClient() {
                         onClick={() => copyToClipboard(user.editorLink)}
                       >
                         <Copy className="size-4 mr-2" />
-                        Copiar Editor
+                        {t('admin.copyEditor')}
                       </Button>
                     ) : (
                       <span className="text-sm text-muted-foreground">
-                        Sem link gerado
+                        {t('admin.noLinkGenerated')}
                       </span>
                     )}
                   </TableCell>
@@ -193,11 +194,11 @@ export function MagicLinksClient() {
                         onClick={() => copyToClipboard(user.viewerLink)}
                       >
                         <Copy className="size-4 mr-2" />
-                        Copiar Visualizador
+                        {t('admin.copyViewer')}
                       </Button>
                     ) : (
                       <span className="text-sm text-muted-foreground">
-                        Sem link gerado
+                        {t('admin.noLinkGenerated')}
                       </span>
                     )}
                   </TableCell>
@@ -206,7 +207,7 @@ export function MagicLinksClient() {
               {(!Array.isArray(existingUsers) || existingUsers.length === 0) && (
                 <TableRow>
                   <TableCell colSpan={3} className="text-center text-muted-foreground">
-                    Nenhum usuário com link ativo
+                    {t('admin.noUsersWithActiveLinks')}
                   </TableCell>
                 </TableRow>
               )}
