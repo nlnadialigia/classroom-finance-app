@@ -1,6 +1,6 @@
 # Classroom Finance App
 
-Financial management system for private tutors, built with Next.js 16 and Prisma.
+Financial management system for classroom, built with Next.js 16 and Prisma.
 
 [Versão em português](docs/pt/README-pt.md)
 
